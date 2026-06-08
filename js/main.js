@@ -5,10 +5,11 @@ if (hamburger) {
   hamburger.addEventListener('click', () => nav.classList.toggle('nav-mobile-open'));
 }
 
-// Mark active nav link
+// Mark active nav link + close mobile menu on tap
 const links = document.querySelectorAll('.nav-links a');
 links.forEach(link => {
   if (link.href === location.href) link.classList.add('active');
+  link.addEventListener('click', () => nav.classList.remove('nav-mobile-open'));
 });
 
 // Lightbox
