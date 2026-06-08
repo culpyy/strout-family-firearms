@@ -5,6 +5,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gallery — Strout Family Firearms</title>
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .build-section { margin-bottom: 72px; }
+    .build-header {
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .build-header h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      letter-spacing: 2px;
+      color: var(--text);
+    }
+    .build-header span {
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--red-light);
+    }
+    .video-item {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #000;
+      aspect-ratio: 16/9;
+    }
+    .video-item video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .video-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--red);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 1px;
+    }
+  </style>
 </head>
 <body>
 
@@ -30,165 +79,264 @@
   <div class="page-header">
     <div class="section-label">The Work</div>
     <h1>Build Gallery</h1>
-    <p>Every firearm that leaves our shop — custom builds, restorations, and gunsmithing work.</p>
+    <p>Historic machine guns, custom SMGs, and rare military pieces — restored and built right.</p>
   </div>
 
   <!-- GALLERY -->
   <section>
+
+    <!-- FILTER -->
     <div class="filter-bar">
       <button class="filter-btn active" data-filter="all">All Builds</button>
-      <button class="filter-btn" data-filter="rifle">Rifles</button>
-      <button class="filter-btn" data-filter="pistol">Pistols</button>
-      <button class="filter-btn" data-filter="shotgun">Shotguns</button>
-      <button class="filter-btn" data-filter="work">Gunsmithing</button>
+      <button class="filter-btn" data-filter="hk21">HK21</button>
+      <button class="filter-btn" data-filter="mp5">MP5</button>
+      <button class="filter-btn" data-filter="sg43">SG-43</button>
+      <button class="filter-btn" data-filter="vickers">Vickers</button>
     </div>
 
-    <div class="gallery-grid">
-
-      <div class="gallery-item wide fade-in" data-title="Custom AR-15 Build" data-sub="Rifle · 5.56 NATO" data-cat="rifle">
-        <div class="gallery-item-inner">
-          <div class="gallery-placeholder">
-            <svg width="56" height="56" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            <span>Add your photo</span>
-          </div>
-        </div>
-        <div class="gallery-overlay">
-          <div class="gallery-overlay-text">
-            <span>Rifle · 5.56 NATO</span>
-            <h4>Custom AR-15 Build</h4>
-          </div>
-        </div>
+    <!-- HK21 -->
+    <div class="build-section" data-section="hk21">
+      <div class="build-header">
+        <h3>Heckler &amp; Koch HK21</h3>
+        <span>7.62×51mm NATO · Light Machine Gun</span>
       </div>
+      <div class="gallery-grid">
 
-      <div class="gallery-item tall fade-in" data-title="1911 Full Restoration" data-sub="Pistol · .45 ACP" data-cat="pistol">
-        <div class="gallery-item-inner">
-          <div class="gallery-placeholder" style="min-height: 100%;">
-            <svg width="56" height="56" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            <span>Add your photo</span>
+        <div class="gallery-item wide fade-in" data-cat="hk21" data-title="HK21 — Left Side, Drum Mag" data-sub="7.62×51 NATO · Light Machine Gun" data-src="images/HK21/Benny-HK21-left-feed-drum.jpg">
+          <div class="gallery-item-inner">
+            <img src="images/HK21/Benny-HK21-left-feed-drum.jpg" alt="HK21 left side with drum magazine" loading="lazy" />
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-overlay-text">
+              <span>LMG · 7.62×51 NATO</span>
+              <h4>HK21 — Left Side, Drum Mag</h4>
+            </div>
           </div>
         </div>
-        <div class="gallery-overlay">
-          <div class="gallery-overlay-text">
-            <span>Pistol · .45 ACP</span>
-            <h4>1911 Full Restoration</h4>
+
+        <div class="gallery-item tall fade-in" data-cat="hk21" data-title="HK21 — Left Profile" data-sub="7.62×51 NATO · Light Machine Gun" data-src="images/HK21/Benny-HK21-left.jpg">
+          <div class="gallery-item-inner">
+            <img src="images/HK21/Benny-HK21-left.jpg" alt="HK21 left profile on bipod" loading="lazy" style="height:100%;object-fit:cover;" />
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-overlay-text">
+              <span>LMG · 7.62×51 NATO</span>
+              <h4>HK21 — Left Profile</h4>
+            </div>
           </div>
         </div>
+
+        <div class="gallery-item fade-in" data-cat="hk21" data-title="HK21 — Barrel Detail" data-sub="Muzzle &amp; Bipod Close-Up" data-src="images/HK21/Benny-HK21-right-barrel.jpg">
+          <div class="gallery-item-inner">
+            <img src="images/HK21/Benny-HK21-right-barrel.jpg" alt="HK21 barrel and bipod detail" loading="lazy" />
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-overlay-text">
+              <span>Detail</span>
+              <h4>HK21 — Barrel &amp; Bipod</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item fade-in" data-cat="hk21" data-title="HK21 — Right Side" data-sub="7.62×51 NATO · Light Machine Gun" data-src="images/HK21/Benny-HK21-right.jpg">
+          <div class="gallery-item-inner">
+            <img src="images/HK21/Benny-HK21-right.jpg" alt="HK21 right profile" loading="lazy" />
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-overlay-text">
+              <span>LMG · 7.62×51 NATO</span>
+              <h4>HK21 — Right Profile</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item fade-in" data-cat="hk21" data-title="HK21 — Drum Mag, Alt Angle" data-sub="Drum Feed System" data-src="images/HK21/Benny-HK21-left-feed-drum-2.jpg">
+          <div class="gallery-item-inner">
+            <img src="images/HK21/Benny-HK21-left-feed-drum-2.jpg" alt="HK21 drum magazine alternate angle" loading="lazy" />
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-overlay-text">
+              <span>Detail</span>
+              <h4>HK21 — Drum Feed</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item fade-in" data-cat="hk21" data-title="HK21 — Left Feed" data-sub="Feed System Detail" data-src="images/HK21/Benny-HK21-left-feed.jpg">
+          <div class="gallery-item-inner">
+            <img src="images/HK21/Benny-HK21-left-feed.jpg" alt="HK21 left feed system" loading="lazy" />
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-overlay-text">
+              <span>Detail</span>
+              <h4>HK21 — Feed System</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item fade-in" data-cat="hk21" data-title="HK21 — Rear View" data-sub="Stock &amp; Rear Detail" data-src="images/HK21/Benny-HK21-rear.jpg">
+          <div class="gallery-item-inner">
+            <img src="images/HK21/Benny-HK21-rear.jpg" alt="HK21 rear view" loading="lazy" />
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-overlay-text">
+              <span>Detail</span>
+              <h4>HK21 — Rear</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item fade-in" data-cat="hk21" data-title="HK21 — Right Ejection Port" data-sub="Action Detail" data-src="images/HK21/Benny-HK21-right-ejection.jpg">
+          <div class="gallery-item-inner">
+            <img src="images/HK21/Benny-HK21-right-ejection.jpg" alt="HK21 right ejection port" loading="lazy" />
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-overlay-text">
+              <span>Detail</span>
+              <h4>HK21 — Ejection Port</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item wide fade-in" data-cat="hk21" data-title="HK21 — Right Rear" data-sub="7.62×51 NATO · Light Machine Gun" data-src="images/HK21/Benny-HK21-right-rear.jpg">
+          <div class="gallery-item-inner">
+            <img src="images/HK21/Benny-HK21-right-rear.jpg" alt="HK21 right rear angle" loading="lazy" />
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-overlay-text">
+              <span>LMG · 7.62×51 NATO</span>
+              <h4>HK21 — Right Rear</h4>
+            </div>
+          </div>
+        </div>
+
       </div>
-
-      <div class="gallery-item fade-in" data-title="Precision Rifle Build" data-sub="Rifle · .308 WIN" data-cat="rifle">
-        <div class="gallery-item-inner">
-          <div class="gallery-placeholder">
-            <svg width="56" height="56" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            <span>Add your photo</span>
-          </div>
-        </div>
-        <div class="gallery-overlay">
-          <div class="gallery-overlay-text">
-            <span>Rifle · .308 WIN</span>
-            <h4>Precision Rifle Build</h4>
-          </div>
-        </div>
-      </div>
-
-      <div class="gallery-item fade-in" data-title="Pump-Action Custom" data-sub="Shotgun · 12ga" data-cat="shotgun">
-        <div class="gallery-item-inner">
-          <div class="gallery-placeholder">
-            <svg width="56" height="56" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            <span>Add your photo</span>
-          </div>
-        </div>
-        <div class="gallery-overlay">
-          <div class="gallery-overlay-text">
-            <span>Shotgun · 12ga</span>
-            <h4>Pump-Action Custom</h4>
-          </div>
-        </div>
-      </div>
-
-      <div class="gallery-item wide fade-in" data-title="Trigger &amp; Barrel Work" data-sub="Gunsmithing" data-cat="work">
-        <div class="gallery-item-inner">
-          <div class="gallery-placeholder">
-            <svg width="56" height="56" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            <span>Add your photo</span>
-          </div>
-        </div>
-        <div class="gallery-overlay">
-          <div class="gallery-overlay-text">
-            <span>Gunsmithing</span>
-            <h4>Trigger &amp; Barrel Work</h4>
-          </div>
-        </div>
-      </div>
-
-      <div class="gallery-item fade-in" data-title="Glock Custom Slide" data-sub="Pistol · 9mm" data-cat="pistol">
-        <div class="gallery-item-inner">
-          <div class="gallery-placeholder">
-            <svg width="56" height="56" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            <span>Add your photo</span>
-          </div>
-        </div>
-        <div class="gallery-overlay">
-          <div class="gallery-overlay-text">
-            <span>Pistol · 9mm</span>
-            <h4>Glock Custom Slide</h4>
-          </div>
-        </div>
-      </div>
-
-      <div class="gallery-item fade-in" data-title="Over-Under Restoration" data-sub="Shotgun · 20ga" data-cat="shotgun">
-        <div class="gallery-item-inner">
-          <div class="gallery-placeholder">
-            <svg width="56" height="56" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            <span>Add your photo</span>
-          </div>
-        </div>
-        <div class="gallery-overlay">
-          <div class="gallery-overlay-text">
-            <span>Shotgun · 20ga</span>
-            <h4>Over-Under Restoration</h4>
-          </div>
-        </div>
-      </div>
-
-      <div class="gallery-item fade-in" data-title="Cerakote Finish" data-sub="Gunsmithing" data-cat="work">
-        <div class="gallery-item-inner">
-          <div class="gallery-placeholder">
-            <svg width="56" height="56" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            <span>Add your photo</span>
-          </div>
-        </div>
-        <div class="gallery-overlay">
-          <div class="gallery-overlay-text">
-            <span>Gunsmithing</span>
-            <h4>Cerakote Finish</h4>
-          </div>
-        </div>
-      </div>
-
-      <div class="gallery-item wide fade-in" data-title="AR-10 Platform Build" data-sub="Rifle · 6.5 Creedmoor" data-cat="rifle">
-        <div class="gallery-item-inner">
-          <div class="gallery-placeholder">
-            <svg width="56" height="56" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            <span>Add your photo</span>
-          </div>
-        </div>
-        <div class="gallery-overlay">
-          <div class="gallery-overlay-text">
-            <span>Rifle · 6.5 Creedmoor</span>
-            <h4>AR-10 Platform Build</h4>
-          </div>
-        </div>
-      </div>
-
     </div>
 
-    <div style="margin-top: 48px; padding: 28px 32px; border: 1px dashed var(--border); border-radius: 2px; text-align: center;">
-      <p style="font-size: 13px; color: var(--muted); letter-spacing: 0.5px;">
-        Have photos to add? Drop image files into the <strong style="color: var(--silver);">images/</strong> folder,
-        then replace the placeholder <code style="color: var(--red-light);">&lt;div class="gallery-placeholder"&gt;</code>
-        blocks with <code style="color: var(--red-light);">&lt;img src="images/your-photo.jpg"&gt;</code>
-      </p>
+    <!-- MP5 -->
+    <div class="build-section" data-section="mp5">
+      <div class="build-header">
+        <h3>Heckler &amp; Koch MP5</h3>
+        <span>9×19mm Parabellum · Submachine Gun</span>
+      </div>
+      <div class="gallery-grid">
+
+        <div class="gallery-item wide fade-in" data-cat="mp5" data-title="MP5 — Stock Extended" data-sub="9mm · Submachine Gun" data-src="images/MP5/1000001364.jpg">
+          <div class="gallery-item-inner">
+            <img src="images/MP5/1000001364.jpg" alt="MP5 with stock extended" loading="lazy" />
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-overlay-text">
+              <span>SMG · 9mm</span>
+              <h4>MP5 — Stock Extended</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item fade-in" data-cat="mp5" data-title="MP5 — Left Profile" data-sub="9mm · Submachine Gun" data-src="images/MP5/1000001366.jpg">
+          <div class="gallery-item-inner">
+            <img src="images/MP5/1000001366.jpg" alt="MP5 left profile" loading="lazy" />
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-overlay-text">
+              <span>SMG · 9mm</span>
+              <h4>MP5 — Left Profile</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item fade-in" data-cat="mp5" data-title="MP5 — Right Side" data-sub="9mm · Submachine Gun" data-src="images/MP5/1000001369.jpg">
+          <div class="gallery-item-inner">
+            <img src="images/MP5/1000001369.jpg" alt="MP5 right side" loading="lazy" />
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-overlay-text">
+              <span>SMG · 9mm</span>
+              <h4>MP5 — Right Side</h4>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
+
+    <!-- SG-43 -->
+    <div class="build-section" data-section="sg43">
+      <div class="build-header">
+        <h3>Soviet SG-43 Goryunov</h3>
+        <span>7.62×54mmR · Medium Machine Gun · Sokolov Wheeled Mount</span>
+      </div>
+      <div class="gallery-grid">
+
+        <div class="gallery-item wide fade-in" data-cat="sg43" data-title="SG-43 — On Sokolov Cart" data-sub="7.62×54mmR · Soviet Medium Machine Gun" data-src="images/SG-43/SG-43-on-cart.jpg">
+          <div class="gallery-item-inner">
+            <img src="images/SG-43/SG-43-on-cart.jpg" alt="SG-43 on Sokolov wheeled cart in the field" loading="lazy" />
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-overlay-text">
+              <span>MMG · 7.62×54mmR</span>
+              <h4>SG-43 — On Sokolov Cart</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="video-item fade-in" data-cat="sg43" style="aspect-ratio:16/9;">
+          <span class="video-badge">&#9654; Live Fire</span>
+          <video controls preload="none" poster="images/SG-43/SG-43-on-cart.jpg">
+            <source src="images/SG-43/SG-43-10-round-Burst.mp4" type="video/mp4" />
+          </video>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- VICKERS -->
+    <div class="build-section" data-section="vickers">
+      <div class="build-header">
+        <h3>Vickers Machine Gun</h3>
+        <span>.303 British · Water-Cooled Heavy Machine Gun · WWI / WWII Era</span>
+      </div>
+      <div class="gallery-grid">
+
+        <div class="gallery-item wide fade-in" data-cat="vickers" data-title="Vickers — Full View" data-sub=".303 British · Water-Cooled HMG" data-src="images/Vickers/448794938_966090861977713_1507913551610780739_n.jpg">
+          <div class="gallery-item-inner">
+            <img src="images/Vickers/448794938_966090861977713_1507913551610780739_n.jpg" alt="Vickers machine gun full view on tripod" loading="lazy" />
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-overlay-text">
+              <span>HMG · .303 British</span>
+              <h4>Vickers — Full View</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item tall fade-in" data-cat="vickers" data-title="Vickers — Traversing Gear" data-sub="Elevation &amp; Traversing Mechanism" data-src="images/Vickers/448768198_966090905311042_1663343854101752196_n.jpg">
+          <div class="gallery-item-inner">
+            <img src="images/Vickers/448768198_966090905311042_1663343854101752196_n.jpg" alt="Vickers traversing and elevation mechanism" loading="lazy" style="height:100%;object-fit:cover;" />
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-overlay-text">
+              <span>Detail</span>
+              <h4>Vickers — Traversing Gear</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item fade-in" data-cat="vickers" data-title="Vickers — Third Angle" data-sub=".303 British · Water-Cooled HMG" data-src="images/Vickers/448866457_966090815311051_5249577123182383749_n.jpg">
+          <div class="gallery-item-inner">
+            <img src="images/Vickers/448866457_966090815311051_5249577123182383749_n.jpg" alt="Vickers machine gun alternate angle" loading="lazy" />
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-overlay-text">
+              <span>HMG · .303 British</span>
+              <h4>Vickers — Alternate View</h4>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </section>
 
   <!-- LIGHTBOX -->
@@ -236,5 +384,20 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script>
+    // Section-based filter
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const cat = btn.dataset.filter;
+        document.querySelectorAll('.build-section').forEach(section => {
+          const key = section.dataset.section;
+          section.style.display = (cat === 'all' || cat === key) ? '' : 'none';
+        });
+      });
+    });
+  </script>
 </body>
 </html>
