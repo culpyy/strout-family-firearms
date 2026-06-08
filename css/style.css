@@ -860,6 +860,7 @@ footer {
   /* Nav */
   .nav { padding: 0 20px; }
   .nav-links, .nav-cta { display: none; }
+  .nav-logo .sub { display: none; }
   .hamburger { display: flex; }
 
   .nav-mobile-open .nav-links {
