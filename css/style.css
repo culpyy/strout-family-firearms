@@ -859,7 +859,8 @@ footer {
 @media (max-width: 900px) {
   /* Nav */
   .nav { padding: 0 20px; }
-  .nav-links, .nav-cta { display: none; }
+  .nav-links { display: none; }
+  .nav-cta { font-size: 11px; padding: 8px 14px; }
   .nav-logo .sub-ffl { display: none; }
   .hamburger { display: flex; }
 
