@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <title>In Shop | Active Builds | Strout Family Firearms | Limington, ME</title>
-  <meta name="description" content="See what's currently in the shop at Strout Family Firearms. Live build status for custom firearms projects in Limington, Maine. Call (207) 332-6999." />
-  <meta name="keywords" content="gunsmith Limington ME, custom gun builds Maine, active builds Maine gunsmith, FFL gunsmith Maine" />
+  <meta name="description" content="See what's currently in the shop at Strout Family Firearms. FFL 07 manufacturer and SOT holder in Limington, Maine. Custom builds, NFA items, Class III, historic restorations. Call (207) 332-6999." />
+  <meta name="keywords" content="gunsmith Limington ME, custom gun builds Maine, NFA gunsmith Maine, Class III Maine, SOT Maine, FFL 07 Maine, machine gun restoration Maine" />
   <meta name="robots" content="index, follow" />
   <meta property="og:title" content="In Shop | Strout Family Firearms | Limington, ME" />
-  <meta property="og:description" content="Live build status for active gunsmithing and custom firearms projects at Strout Family Firearms in Limington, Maine." />
+  <meta property="og:description" content="Active build board and shop capabilities for Strout Family Firearms. FFL 07 + SOT. NFA items, Class III, historic restorations, custom builds. Limington, ME." />
   <meta property="og:type" content="website" />
   <link rel="stylesheet" href="css/style.css" />
   <script type="application/ld+json">
@@ -43,91 +43,114 @@
       --s-ready:         #1a5c1a;
     }
 
+    /* ── CREDENTIALS STRIP ── */
+    .creds-strip {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .cred-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 28px;
+      border-right: 1px solid var(--border);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .cred-item:first-child { padding-left: 0; }
+    .cred-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--red-light);
+      flex-shrink: 0;
+    }
+    .cred-item span {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .cred-item span strong {
+      color: var(--silver);
+      font-weight: 600;
+    }
+
     /* ── SUMMARY BAR ── */
     .summary-bar {
       display: flex;
       gap: 2px;
       background: var(--border);
       border: 1px solid var(--border);
-      margin-bottom: 48px;
+      margin-bottom: 32px;
       flex-wrap: wrap;
     }
-
     .summary-stat {
       flex: 1;
       min-width: 120px;
       background: var(--surface);
-      padding: 28px 24px;
+      padding: 24px 20px;
       text-align: center;
     }
-
     .summary-stat .num {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 48px;
       line-height: 1;
       color: var(--text);
     }
-
     .summary-stat .num.green { color: #4caf50; }
-
     .summary-stat .label {
       font-size: 10px;
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--muted);
-      margin-top: 6px;
+      margin-top: 4px;
     }
 
     /* ── BUILD CARDS ── */
     .builds-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
-
     .build-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-left: 4px solid var(--border);
-      padding: 28px 32px;
+      padding: 24px 28px;
       display: grid;
       grid-template-columns: 1fr auto;
       gap: 24px;
       align-items: start;
       transition: background 0.2s;
     }
-
     .build-card:hover { background: var(--surface2); }
-
     .build-card.status-intake        { border-left-color: var(--s-intake); }
     .build-card.status-parts-ordered { border-left-color: var(--s-parts-ordered); }
     .build-card.status-in-progress   { border-left-color: var(--s-in-progress); }
     .build-card.status-testing       { border-left-color: var(--s-testing); }
     .build-card.status-ready         { border-left-color: var(--s-ready); }
-
     .build-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 24px;
+      font-size: 22px;
       letter-spacing: 1.5px;
       color: var(--text);
       margin-bottom: 4px;
     }
-
     .build-meta {
-      font-size: 12px;
+      font-size: 11px;
       letter-spacing: 1.5px;
       text-transform: uppercase;
       color: var(--muted);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
-
     .build-meta span { color: var(--red-light); margin-right: 6px; }
-
-    /* Progress bar */
-    .progress-wrap {
-      margin-bottom: 12px;
-    }
-
+    .progress-wrap { margin-bottom: 10px; }
     .progress-labels {
       display: flex;
       justify-content: space-between;
@@ -135,127 +158,348 @@
       letter-spacing: 1.5px;
       text-transform: uppercase;
       color: var(--muted);
-      margin-bottom: 6px;
+      margin-bottom: 5px;
     }
-
     .progress-bar {
-      height: 4px;
+      height: 3px;
       background: var(--border);
       border-radius: 2px;
       overflow: hidden;
     }
-
     .progress-fill {
       height: 100%;
       border-radius: 2px;
       background: var(--red-light);
       transition: width 0.6s ease;
     }
-
     .status-intake        .progress-fill { background: var(--s-intake); }
     .status-parts-ordered .progress-fill { background: var(--s-parts-ordered); }
     .status-in-progress   .progress-fill { background: var(--s-in-progress); }
     .status-testing       .progress-fill { background: var(--s-testing); }
     .status-ready         .progress-fill { background: var(--s-ready); }
-
     .build-notes {
       font-size: 13px;
       color: var(--muted);
       font-style: italic;
       margin-top: 8px;
     }
-
-    /* Status badge */
     .status-badge {
       font-size: 10px;
       font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
-      padding: 6px 14px;
+      padding: 5px 12px;
       border-radius: 2px;
       white-space: nowrap;
       color: #fff;
     }
-
     .status-intake        .status-badge { background: var(--s-intake); }
     .status-parts-ordered .status-badge { background: var(--s-parts-ordered); }
     .status-in-progress   .status-badge { background: var(--s-in-progress); }
     .status-testing       .status-badge { background: var(--s-testing); }
     .status-ready         .status-badge { background: var(--s-ready); }
-
     .build-right {
       display: flex;
       flex-direction: column;
       align-items: flex-end;
-      gap: 12px;
+      gap: 10px;
     }
-
-    .eta-block {
-      text-align: right;
-    }
-
+    .eta-block { text-align: right; }
     .eta-block .eta-label {
       font-size: 9px;
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--muted);
     }
-
     .eta-block .eta-date {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 18px;
+      font-size: 16px;
       letter-spacing: 1.5px;
       color: var(--silver);
     }
-
-    /* Stage pipeline */
     .pipeline {
       display: flex;
-      gap: 0;
-      margin-bottom: 20px;
+      gap: 3px;
+      margin-bottom: 14px;
     }
-
     .pipeline-step {
       flex: 1;
       height: 3px;
       background: var(--border);
-      margin-right: 3px;
       border-radius: 1px;
     }
-
     .pipeline-step.done { background: var(--red-light); }
-    .pipeline-step:last-child { margin-right: 0; }
 
-    /* Disclaimer */
-    .disclaimer {
-      margin-top: 48px;
+    /* ── LEGEND ── */
+    .status-legend {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .legend-dot {
+      width: 8px; height: 8px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    /* ── DAYS IN SHOP ── */
+    .build-timing {
+      display: flex;
+      gap: 24px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+    .timing-item { display: flex; flex-direction: column; }
+    .timing-label {
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .timing-value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: 1px;
+      color: var(--silver);
+    }
+    .timing-value.days-long { color: #e07b39; }
+
+    /* ── BOARD HEADER ── */
+    .board-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .board-updated {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .live-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #4caf50;
+      flex-shrink: 0;
+      animation: blink 2.2s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.25; }
+    }
+
+    /* ── LOOKUP CALLOUT ── */
+    .lookup-callout {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--red-light);
       padding: 20px 24px;
+      margin-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .lookup-callout p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+    .lookup-callout p strong { color: var(--silver); }
+    .lookup-cta {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 14px;
+      letter-spacing: 2px;
+      color: var(--red-light);
+      border: 1px solid var(--red);
+      padding: 9px 20px;
+      white-space: nowrap;
+      transition: background 0.2s, color 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .lookup-cta:hover { background: var(--red); color: #fff; }
+
+    /* ── DISCLAIMER ── */
+    .disclaimer {
+      margin-top: 32px;
+      padding: 16px 20px;
       border: 1px solid var(--border);
       border-left: 3px solid var(--red);
       font-size: 13px;
       color: var(--muted);
       line-height: 1.7;
     }
-
     .disclaimer strong { color: var(--silver); }
 
-    /* Mobile */
+    /* ── WHAT WE WORK ON ── */
+    .accept-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: var(--border);
+      margin-top: 32px;
+    }
+    .accept-card {
+      background: var(--surface);
+      padding: 28px 24px;
+      transition: background 0.2s;
+    }
+    .accept-card:hover { background: var(--surface2); }
+    .accept-icon {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--red-light);
+      margin-bottom: 12px;
+    }
+    .accept-card h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      letter-spacing: 1.5px;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .accept-card p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .accept-card ul {
+      list-style: none;
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .accept-card ul li {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+      padding-left: 12px;
+      position: relative;
+    }
+    .accept-card ul li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--red-light);
+    }
+
+    /* ── SHOP CAPABILITIES ── */
+    .cap-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+    .cap-statement p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    .cap-statement p:last-of-type { margin-bottom: 0; }
+    .cap-facts {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      background: var(--border);
+    }
+    .cap-fact {
+      background: var(--bg);
+      padding: 18px 22px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .cap-fact-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--red-light);
+      min-width: 100px;
+      padding-top: 2px;
+    }
+    .cap-fact-text {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .cap-fact-text strong { color: var(--silver); font-weight: 500; }
+
+    /* ── SUBMIT STRIP ── */
+    .submit-strip {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 56px 48px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 48px;
+      align-items: center;
+    }
+    .submit-strip h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing: 2px;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .submit-strip p {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.7;
+    }
+    .submit-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-end;
+      flex-shrink: 0;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .creds-strip { padding: 0 20px; }
+      .cred-item { padding: 14px 20px; }
+      .accept-grid { grid-template-columns: repeat(2, 1fr); }
+      .cap-inner { grid-template-columns: 1fr; gap: 32px; }
+      .submit-strip { grid-template-columns: 1fr; padding: 40px 20px; }
+      .submit-actions { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
+    }
+
     @media (max-width: 640px) {
-      .build-card {
-        grid-template-columns: 1fr;
-        padding: 20px;
-      }
-
-      .build-right {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-      }
-
+      .creds-strip { padding: 0 16px; }
+      .build-card { grid-template-columns: 1fr; padding: 18px 16px; }
+      .build-right { flex-direction: row; align-items: center; justify-content: space-between; }
       .eta-block { text-align: left; }
-
-      .summary-stat { min-width: 80px; padding: 20px 16px; }
+      .summary-stat { min-width: 80px; padding: 18px 12px; }
       .summary-stat .num { font-size: 36px; }
+      .accept-grid { grid-template-columns: 1fr; }
+      .status-legend { gap: 12px; }
     }
   </style>
 </head>
@@ -282,23 +526,222 @@
 
   <!-- PAGE HEADER -->
   <div class="page-header">
-    <div class="section-label">Current Work</div>
+    <div class="section-label">Active Work</div>
     <h1>In Shop</h1>
-    <p>Active builds and their current status. Updated as work progresses.</p>
+    <p>Live build board, shop capabilities, and what we accept. Updated as work progresses.</p>
   </div>
 
-  <!-- MAIN -->
+  <!-- CREDENTIALS STRIP -->
+  <div class="creds-strip">
+    <div class="cred-item">
+      <div class="cred-dot"></div>
+      <span><strong>FFL 07</strong> &nbsp;Licensed Manufacturer</span>
+    </div>
+    <div class="cred-item">
+      <div class="cred-dot"></div>
+      <span><strong>SOT</strong> &nbsp;Tax Stamp Holder</span>
+    </div>
+    <div class="cred-item">
+      <div class="cred-dot"></div>
+      <span><strong>Class III</strong> &nbsp;Capable</span>
+    </div>
+    <div class="cred-item">
+      <div class="cred-dot"></div>
+      <span><strong>NFA Items</strong> &nbsp;Accepted</span>
+    </div>
+    <div class="cred-item">
+      <div class="cred-dot"></div>
+      <span><strong>80-Yard</strong> &nbsp;Private Range</span>
+    </div>
+    <div class="cred-item">
+      <div class="cred-dot"></div>
+      <span><strong>USCCA</strong> &nbsp;Certified Instruction</span>
+    </div>
+  </div>
+
+  <!-- ACTIVE BUILDS -->
   <section>
-    <!-- Summary bar — filled by JS -->
+    <div class="section-label">Current Queue</div>
+    <h2 class="section-title">Active Builds</h2>
+    <p class="section-sub">What's on the bench right now. Status updates as work moves forward.</p>
+
+    <div class="board-header">
+      <div class="board-updated">
+        <div class="live-dot"></div>
+        <span id="boardUpdated">Loading board...</span>
+      </div>
+      <span style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);">Don't see yours? <a href="tel:2073326999" style="color:var(--red-light);">Call us</a></span>
+    </div>
+
     <div class="summary-bar" id="summaryBar"></div>
 
-    <!-- Build cards — filled by JS -->
+    <div class="status-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--s-intake)"></div>Intake</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--s-parts-ordered)"></div>Parts Ordered</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--s-in-progress)"></div>In Progress</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--s-testing)"></div>Range Testing</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--s-ready)"></div>Ready for Pickup</div>
+    </div>
+
     <div class="builds-list" id="buildsList"></div>
 
     <div class="disclaimer">
-      <strong>Note:</strong> Estimated completion dates are best guesses based on current workload and parts availability. We'll reach out directly if anything changes on your build. Questions? Give us a call at <a href="tel:2073326999" style="color: var(--red-light);">(207) 332-6999</a>.
+      <strong>Note:</strong> Estimated completion dates are best guesses based on current workload and parts availability. We'll reach out directly if anything changes on your build. Questions? Call us at <a href="tel:2073326999" style="color: var(--red-light);">(207) 332-6999</a>.
+    </div>
+
+    <div class="lookup-callout">
+      <p><strong>Don't see your build listed?</strong> Not every item in the shop is on the board. If you dropped something off and don't see it here, give us a call and we'll give you a live status update.</p>
+      <a href="tel:2073326999" class="lookup-cta">(207) 332-6999</a>
     </div>
   </section>
+
+  <!-- WHAT WE WORK ON -->
+  <section style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="section-label">Intake</div>
+    <h2 class="section-title">What We Work On</h2>
+    <p class="section-sub">We take on work most shops turn away. If it has to be done right, bring it to us.</p>
+    <div class="accept-grid">
+
+      <div class="accept-card fade-in">
+        <div class="accept-icon">01 &nbsp;·&nbsp; Custom Builds</div>
+        <h3>Custom Firearms</h3>
+        <p>Full builds from the ground up to your specs. Every build gets a function check on the range before it leaves.</p>
+        <ul>
+          <li>AR-15 / AR-10 platform builds</li>
+          <li>AK platform builds</li>
+          <li>Pistol builds and full customs</li>
+          <li>Parts kit builds</li>
+          <li>Precision rifle builds</li>
+        </ul>
+      </div>
+
+      <div class="accept-card fade-in">
+        <div class="accept-icon">02 &nbsp;·&nbsp; NFA / Class III</div>
+        <h3>NFA Items &amp; Class III</h3>
+        <p>We hold an FFL 07 and SOT Tax Stamp. We can manufacture and transfer NFA items that most shops can't touch.</p>
+        <ul>
+          <li>Form 1 SBR / SBS builds</li>
+          <li>Suppressor manufacturing</li>
+          <li>Class III transfers (Form 4)</li>
+          <li>Machine gun work and repairs</li>
+          <li>NFA item consultation</li>
+        </ul>
+      </div>
+
+      <div class="accept-card fade-in">
+        <div class="accept-icon">03 &nbsp;·&nbsp; Historic Work</div>
+        <h3>Historic Restorations</h3>
+        <p>Rare, antique, and historic firearms that need real knowledge. Machine gun restorations, vintage military arms, pieces most gunsmiths pass on.</p>
+        <ul>
+          <li>WWI / WWII era machine guns</li>
+          <li>Vintage military rifles and pistols</li>
+          <li>Pre-1986 registered machine guns</li>
+          <li>Antique and collector pieces</li>
+          <li>Parts fabrication for obsolete models</li>
+        </ul>
+      </div>
+
+      <div class="accept-card fade-in">
+        <div class="accept-icon">04 &nbsp;·&nbsp; Gunsmithing</div>
+        <h3>Gunsmithing &amp; Repairs</h3>
+        <p>Trigger work, barrel work, action jobs, troubleshooting. Bring us the problem and we'll tell you straight what it needs.</p>
+        <ul>
+          <li>Trigger jobs and action work</li>
+          <li>Barrel fitting and threading</li>
+          <li>Stock fitting and bedding</li>
+          <li>Timing and headspace checks</li>
+          <li>Malfunction diagnosis</li>
+        </ul>
+      </div>
+
+      <div class="accept-card fade-in">
+        <div class="accept-icon">05 &nbsp;·&nbsp; Transfers</div>
+        <h3>FFL Transfers</h3>
+        <p>$20 per transfer, in and out of state. Call before you ship anything our way so we can make sure everything is ready on our end.</p>
+        <ul>
+          <li>Dealer-to-dealer transfers</li>
+          <li>Online purchase transfers</li>
+          <li>Out-of-state transfers</li>
+          <li>NFA transfers (Form 4)</li>
+          <li>Estate and trust transfers</li>
+        </ul>
+      </div>
+
+      <div class="accept-card fade-in">
+        <div class="accept-icon">06 &nbsp;·&nbsp; Range Verification</div>
+        <h3>Range Testing</h3>
+        <p>Every build we touch gets live-fire verified on our private 80-yard range before it goes out the door. No exceptions.</p>
+        <ul>
+          <li>Function check on all builds</li>
+          <li>Zero verification for precision rifles</li>
+          <li>Suppressor testing and tuning</li>
+          <li>Post-repair function verification</li>
+          <li>NFA item testing and documentation</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SHOP CAPABILITIES -->
+  <section>
+    <div class="section-label">Why It Matters</div>
+    <h2 class="section-title">What FFL 07 + SOT Means</h2>
+    <p class="section-sub">Most gunsmiths hold an FFL 01. We hold an FFL 07 and an SOT Tax Stamp. That's a different license class entirely.</p>
+    <div class="cap-inner">
+      <div class="cap-statement">
+        <p>
+          An FFL 01 licenses a dealer to sell. An FFL 07 licenses a manufacturer to build, modify, and manufacture firearms commercially. Add the SOT Tax Stamp and we're authorized to manufacture and transfer NFA items, including suppressors, short-barreled rifles, and machine guns.
+        </p>
+        <p>
+          That's why we can take on work other shops in southern Maine won't touch. Machine gun restorations, Form 1 builds, suppressor manufacturing, Class III transfers — all of it is within our license scope.
+        </p>
+        <p>
+          Combined with 55+ years of combined shooting experience and a private 80-yard range on the property, we can do the full job from bench to function check without leaving the shop.
+        </p>
+        <a href="contact.html" class="btn-secondary" style="margin-top: 8px;">Start a Build &#8594;</a>
+      </div>
+      <div class="cap-facts">
+        <div class="cap-fact">
+          <div class="cap-fact-label">FFL 07</div>
+          <div class="cap-fact-text"><strong>Licensed Manufacturer.</strong> Authorized to manufacture, build, and sell firearms commercially under federal law.</div>
+        </div>
+        <div class="cap-fact">
+          <div class="cap-fact-label">SOT</div>
+          <div class="cap-fact-text"><strong>Special Occupational Taxpayer.</strong> Authorized to manufacture and transfer NFA items including suppressors, SBRs, and machine guns.</div>
+        </div>
+        <div class="cap-fact">
+          <div class="cap-fact-label">Class III</div>
+          <div class="cap-fact-text"><strong>Class III Dealer.</strong> Can transfer registered machine guns, suppressors, and other NFA items to qualified buyers.</div>
+        </div>
+        <div class="cap-fact">
+          <div class="cap-fact-label">80-Yd Range</div>
+          <div class="cap-fact-text"><strong>On-property private range.</strong> Every build gets live-fire verified before it leaves. No scheduling around public ranges.</div>
+        </div>
+        <div class="cap-fact">
+          <div class="cap-fact-label">USCCA</div>
+          <div class="cap-fact-text"><strong>Certified Instruction.</strong> Kevin is USCCA-certified. Defensive shooting courses run on the same range we use to test builds.</div>
+        </div>
+        <div class="cap-fact">
+          <div class="cap-fact-label">Experience</div>
+          <div class="cap-fact-text"><strong>55+ combined years.</strong> Machine gun restorations, rare military arms, precision builds — we've worked on things most shops have never seen.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUBMIT A BUILD -->
+  <div class="submit-strip">
+    <div>
+      <div class="section-label">Get Started</div>
+      <h2>Ready to Submit a Build?</h2>
+      <p>Call us or send a message with what you're looking to do. We'll let you know if it's in our wheelhouse, give you a timeline, and quote you a price. The number we give you is the number you pay.</p>
+    </div>
+    <div class="submit-actions">
+      <a href="tel:2073326999" class="btn-primary">(207) 332-6999</a>
+      <a href="contact.html" class="btn-secondary">Send a Message &#8594;</a>
+    </div>
+  </div>
 
   <!-- FOOTER -->
   <footer>
@@ -341,8 +784,16 @@
       'intake':        'Intake',
       'parts-ordered': 'Parts Ordered',
       'in-progress':   'In Progress',
-      'testing':       'Testing',
+      'testing':       'Range Testing',
       'ready':         'Ready for Pickup'
+    };
+
+    const stageDescriptions = {
+      'intake':        'In — being assessed',
+      'parts-ordered': 'Waiting on parts',
+      'in-progress':   'On the bench',
+      'testing':       'On the range',
+      'ready':         'Call to pick up'
     };
 
     const stages = ['intake', 'parts-ordered', 'in-progress', 'testing', 'ready'];
@@ -352,16 +803,37 @@
       return stages.map((_, i) => i <= idx);
     }
 
-    function formatEta(dateStr) {
+    function formatDate(dateStr) {
       if (!dateStr) return '';
       const d = new Date(dateStr + 'T00:00:00');
       return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     }
 
+    function daysInShop(receivedStr) {
+      if (!receivedStr) return null;
+      const received = new Date(receivedStr + 'T00:00:00');
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return Math.floor((today - received) / 86400000);
+    }
+
+    function renderBoardUpdated() {
+      const latest = builds.reduce((max, b) => {
+        if (!b.received) return max;
+        return b.received > max ? b.received : max;
+      }, '');
+      const el = document.getElementById('boardUpdated');
+      if (el) {
+        const dateStr = latest ? 'Last intake: ' + formatDate(latest) : 'Board active';
+        el.textContent = dateStr;
+      }
+    }
+
     function renderSummary() {
-      const counts = { total: builds.length, ready: 0, active: 0 };
+      const counts = { total: builds.length, ready: 0, active: 0, testing: 0 };
       builds.forEach(b => {
         if (b.status === 'ready') counts.ready++;
+        else if (b.status === 'testing') counts.testing++;
         else counts.active++;
       });
       document.getElementById('summaryBar').innerHTML = `
@@ -371,7 +843,11 @@
         </div>
         <div class="summary-stat">
           <div class="num">${counts.active}</div>
-          <div class="label">In Progress</div>
+          <div class="label">Active Builds</div>
+        </div>
+        <div class="summary-stat">
+          <div class="num" style="color:#5a2d82;">${counts.testing}</div>
+          <div class="label">Range Testing</div>
         </div>
         <div class="summary-stat">
           <div class="num green">${counts.ready}</div>
@@ -386,22 +862,40 @@
 
       document.getElementById('buildsList').innerHTML = sorted.map(b => {
         const done = stagesDone(b.status);
-        const pipeline = stages.map((_, i) =>
-          `<div class="pipeline-step ${done[i] ? 'done' : ''}"></div>`
+        const pipeline = stages.map((s, i) =>
+          `<div class="pipeline-step ${done[i] ? 'done' : ''}" title="${statusLabels[s]}"></div>`
         ).join('');
 
-        const eta = formatEta(b.eta);
+        const eta = formatDate(b.eta);
         const etaHtml = eta ? `
           <div class="eta-block">
-            <div class="eta-label">Est. Completion</div>
+            <div class="eta-label">Est. Complete</div>
             <div class="eta-date">${eta}</div>
+          </div>` : '';
+
+        const days = daysInShop(b.received);
+        const daysClass = days !== null && days > 30 ? 'days-long' : '';
+        const timingHtml = (b.received || eta) ? `
+          <div class="build-timing">
+            ${b.received ? `<div class="timing-item">
+              <span class="timing-label">In Shop Since</span>
+              <span class="timing-value">${formatDate(b.received)}</span>
+            </div>` : ''}
+            ${days !== null ? `<div class="timing-item">
+              <span class="timing-label">Days in Shop</span>
+              <span class="timing-value ${daysClass}">${days}</span>
+            </div>` : ''}
+            ${stageDescriptions[b.status] ? `<div class="timing-item">
+              <span class="timing-label">Current Stage</span>
+              <span class="timing-value" style="font-size:13px;font-family:'Inter',sans-serif;color:var(--muted);">${stageDescriptions[b.status]}</span>
+            </div>` : ''}
           </div>` : '';
 
         return `
           <div class="build-card status-${b.status} fade-in">
             <div class="build-left">
               <div class="build-title">${b.title}</div>
-              <div class="build-meta"><span>${b.type}</span> ${b.caliber}</div>
+              <div class="build-meta"><span>${b.type}</span>${b.caliber}</div>
               <div class="pipeline">${pipeline}</div>
               <div class="progress-wrap">
                 <div class="progress-labels">
@@ -413,6 +907,7 @@
                 </div>
               </div>
               ${b.notes ? `<div class="build-notes">${b.notes}</div>` : ''}
+              ${timingHtml}
             </div>
             <div class="build-right">
               <div class="status-badge">${statusLabels[b.status]}</div>
@@ -422,6 +917,7 @@
       }).join('');
     }
 
+    renderBoardUpdated();
     renderSummary();
     renderBuilds();
   </script>

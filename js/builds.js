@@ -3,7 +3,7 @@
 //  Edit this file to update the In Shop page.
 //
 //  status options:
-//    "intake"        — just received, being looked over
+//    "intake"        — just received, being assessed
 //    "parts-ordered" — waiting on parts to arrive
 //    "in-progress"   — actively being worked on
 //    "testing"       — on the range for function check
@@ -16,53 +16,53 @@
 
 const builds = [
   {
-    title: "HK21 Custom Build",
-    type: "Light Machine Gun",
-    caliber: "7.62×51 NATO",
-    status: "ready",
-    progress: 100,
-    received: "2024-05-10",
-    eta: "2024-06-05",
-    notes: "Complete. Contact us to arrange pickup."
+    title: "Vickers Mk.I Restoration",
+    type: "Water-Cooled HMG",
+    caliber: ".303 British",
+    status: "testing",
+    progress: 90,
+    received: "2026-04-15",
+    eta: "2026-06-20",
+    notes: "Timing and headspace verified. Range session scheduled."
   },
   {
-    title: "MP5 Build",
+    title: "SBR Form 1 Build",
+    type: "Short-Barreled Rifle",
+    caliber: ".300 Blackout",
+    status: "in-progress",
+    progress: 65,
+    received: "2026-05-02",
+    eta: "2026-06-28",
+    notes: "Form 1 approved. Upper build in progress."
+  },
+  {
+    title: "HK MP5 Parts Kit Build",
     type: "Submachine Gun",
     caliber: "9mm Parabellum",
-    status: "ready",
-    progress: 100,
-    received: "2024-05-01",
-    eta: "2024-04-18",
-    notes: "Complete and function checked. Ready for pickup."
-  },
-  {
-    title: "Custom AR-15",
-    type: "Rifle",
-    caliber: "5.56 NATO",
     status: "in-progress",
-    progress: 60,
-    received: "2024-05-28",
-    eta: "2024-06-20",
-    notes: "Upper assembled. Waiting on BCG."
+    progress: 45,
+    received: "2026-05-10",
+    eta: "2026-07-10",
+    notes: "Receiver work done. Parts kit fitting in progress."
   },
   {
-    title: "Remington 870 Refurb",
-    type: "Shotgun",
-    caliber: "12 Gauge",
-    status: "parts-ordered",
-    progress: 20,
-    received: "2024-06-01",
-    eta: "2024-06-28",
-    notes: "New stock and forend on order."
-  },
-  {
-    title: "1911 Action Job",
+    title: "Custom 1911 Full Build",
     type: "Pistol",
     caliber: ".45 ACP",
+    status: "parts-ordered",
+    progress: 20,
+    received: "2026-05-20",
+    eta: "2026-07-18",
+    notes: "Barrel, slide, and frame on order. Will call when parts arrive."
+  },
+  {
+    title: "Remington 700 Precision Build",
+    type: "Bolt-Action Rifle",
+    caliber: ".308 Winchester",
     status: "intake",
     progress: 5,
-    received: "2024-06-04",
+    received: "2026-06-05",
     eta: "",
-    notes: "Assessment in progress. Will call with quote."
+    notes: "Assessment in progress. Quote within 48 hours."
   }
 ];
