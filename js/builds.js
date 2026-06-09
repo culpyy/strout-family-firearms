@@ -2,12 +2,17 @@
 //  STROUT FAMILY FIREARMS — ACTIVE BUILD BOARD
 //  Edit this file to update the In Shop page.
 //
-//  status options:
+//  status options (in order):
 //    "intake"        — just received, being assessed
 //    "parts-ordered" — waiting on parts to arrive
 //    "in-progress"   — actively being worked on
 //    "testing"       — on the range for function check
-//    "ready"         — done, waiting for customer pickup
+//    "atf-filed"     — build done, ATF transfer paperwork submitted
+//    "atf-approved"  — ATF approved, cleared to transfer
+//    "ready"         — ready for pickup or shipping to customer FFL
+//
+//  atf_form: "Form 3", "Form 4", "Form 1", etc. — leave "" if not an NFA item
+//  atf_filed: "YYYY-MM-DD" — date ATF paperwork was submitted, or "" if not filed yet
 //
 //  progress: 0–100 (percent complete, your best estimate)
 //  eta: "YYYY-MM-DD" format, or "" to leave blank
@@ -19,11 +24,13 @@ const builds = [
     title: "Vickers Mk.I Restoration",
     type: "Water-Cooled HMG",
     caliber: ".303 British",
-    status: "testing",
-    progress: 90,
+    status: "atf-filed",
+    progress: 95,
     received: "2026-04-15",
-    eta: "2026-06-20",
-    notes: "Timing and headspace verified. Range session scheduled."
+    eta: "2026-07-15",
+    atf_form: "Form 3",
+    atf_filed: "2026-06-05",
+    notes: "Build complete. Range session done — timing and headspace verified. ATF Form 3 submitted. Awaiting approval to transfer."
   },
   {
     title: "SBR Form 1 Build",
@@ -33,7 +40,9 @@ const builds = [
     progress: 65,
     received: "2026-05-02",
     eta: "2026-06-28",
-    notes: "Form 1 approved. Upper build in progress."
+    atf_form: "Form 1",
+    atf_filed: "",
+    notes: "Form 1 pre-approved by ATF. Upper build in progress."
   },
   {
     title: "HK MP5 Parts Kit Build",
@@ -43,6 +52,8 @@ const builds = [
     progress: 45,
     received: "2026-05-10",
     eta: "2026-07-10",
+    atf_form: "",
+    atf_filed: "",
     notes: "Receiver work done. Parts kit fitting in progress."
   },
   {
@@ -53,6 +64,8 @@ const builds = [
     progress: 20,
     received: "2026-05-20",
     eta: "2026-07-18",
+    atf_form: "",
+    atf_filed: "",
     notes: "Barrel, slide, and frame on order. Will call when parts arrive."
   },
   {
@@ -63,6 +76,8 @@ const builds = [
     progress: 5,
     received: "2026-06-05",
     eta: "",
+    atf_form: "",
+    atf_filed: "",
     notes: "Assessment in progress. Quote within 48 hours."
   }
 ];
