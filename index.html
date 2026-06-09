@@ -12,6 +12,66 @@
   <meta property="og:description" content="Southern Maine's FFL 07 manufacturer. Custom builds, NFA transfers, gunsmithing, and USCCA-certified training out of Limington, ME." />
   <meta property="og:type" content="website" />
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      background: var(--border);
+      margin-top: 48px;
+    }
+    .process-step {
+      background: var(--bg);
+      padding: 40px 32px;
+    }
+    .process-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 56px;
+      line-height: 1;
+      color: var(--red-light);
+      opacity: 0.5;
+      margin-bottom: 16px;
+    }
+    .process-step h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 1.5px;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .process-step p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      background: var(--border);
+      margin-top: 48px;
+    }
+    .faq-item {
+      padding: 32px;
+      background: var(--surface);
+      border-left: 3px solid var(--border);
+      transition: border-color 0.2s;
+    }
+    .faq-item:hover { border-left-color: var(--red-light); }
+    .faq-item h4 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 19px;
+      letter-spacing: 1.5px;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .faq-item p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+    @media (max-width: 900px) {
+      .process-grid { grid-template-columns: repeat(2, 1fr); }
+      .faq-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .process-grid { grid-template-columns: 1fr; }
+      .process-step { padding: 28px 24px; }
+      .faq-item { padding: 24px; }
+    }
+  </style>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -125,6 +185,35 @@
     </div>
   </section>
 
+  <!-- HOW IT WORKS -->
+  <section style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="section-label">Getting Started</div>
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-sub">Simple process. We keep it straight from the first call.</p>
+    <div class="process-grid">
+      <div class="process-step fade-in">
+        <div class="process-num">01</div>
+        <h3>Call or Message</h3>
+        <p>Reach out by phone or through the contact form. Tell us what you're after and we'll let you know if it's something we can do.</p>
+      </div>
+      <div class="process-step fade-in">
+        <div class="process-num">02</div>
+        <h3>We Talk It Through</h3>
+        <p>We go over the build, timeline, and cost before any work starts. If parts have a lead time or the job is complex, we tell you upfront.</p>
+      </div>
+      <div class="process-step fade-in">
+        <div class="process-num">03</div>
+        <h3>We Get to Work</h3>
+        <p>Once everything's squared away, we start. Check the In Shop page anytime to see where your build stands.</p>
+      </div>
+      <div class="process-step fade-in">
+        <div class="process-num">04</div>
+        <h3>Range Check, Then Pickup</h3>
+        <p>Every build runs through our 80-yard range before it leaves. When it's done right, we'll reach out and let you know.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- ABOUT -->
   <section class="about-strip">
     <div class="about-inner">
@@ -153,6 +242,47 @@
           <h4>FFL 07 + SOT — Class III Capable</h4>
           <p>We're licensed to manufacture and transfer NFA items. FFL 07 and SOT covered. If you have questions about Class III, give us a call.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <div class="section-label">Questions</div>
+    <h2 class="section-title">Frequently Asked</h2>
+    <p class="section-sub">Common questions about builds, transfers, and how we work.</p>
+    <div class="faq-grid">
+      <div class="faq-item fade-in">
+        <h4>Do I Need to Call Before Stopping By?</h4>
+        <p>Yes. We're a working shop, not a walk-in retail store. Give us a call before you come so we can make sure we're around and ready for you.</p>
+      </div>
+      <div class="faq-item fade-in">
+        <h4>How Much Are FFL Transfers?</h4>
+        <p>$20 per transfer, in and out of state. Call before you ship anything our way so we can confirm everything is set on our end.</p>
+      </div>
+      <div class="faq-item fade-in">
+        <h4>Do You Work on NFA Items?</h4>
+        <p>Yes. We hold an FFL 07 and SOT Tax Stamp, so we're cleared for NFA items and Class III transfers. Call us with any questions.</p>
+      </div>
+      <div class="faq-item fade-in">
+        <h4>How Long Do Builds Take?</h4>
+        <p>Depends on the build and parts availability. We give you a realistic timeline upfront and keep you updated if anything changes.</p>
+      </div>
+      <div class="faq-item fade-in">
+        <h4>Do You Offer Training for Beginners?</h4>
+        <p>Yes. Kevin is USCCA-certified and teaches courses for all skill levels, from first-time owners to experienced shooters looking to sharpen up.</p>
+      </div>
+      <div class="faq-item fade-in">
+        <h4>Do You Buy Used Firearms?</h4>
+        <p>Yes. Bring it in and we'll give you a straight number. We buy, sell, and trade firearms, gear, and ammo.</p>
+      </div>
+      <div class="faq-item fade-in">
+        <h4>Can I Ship a Firearm to You?</h4>
+        <p>Yes, for FFL transfers. Give us a call before you ship so we can confirm the details and make sure everything's ready on our end.</p>
+      </div>
+      <div class="faq-item fade-in">
+        <h4>What Areas Do You Serve?</h4>
+        <p>We're in Limington, ME, and serve the surrounding southern Maine area. Most of our customers come from the greater Portland and Sebago Lake region.</p>
       </div>
     </div>
   </section>
