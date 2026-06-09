@@ -45,38 +45,6 @@
       --s-ready:         #1a5c1a;
     }
 
-    /* ── CREDENTIALS STRIP ── */
-    .creds-strip {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 1px;
-      background: var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    .cred-item {
-      background: var(--surface);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 20px;
-    }
-    .cred-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--red-light);
-      flex-shrink: 0;
-    }
-    .cred-item span {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .cred-item span strong {
-      color: var(--silver);
-      font-weight: 600;
-    }
 
     /* ── SUMMARY BAR ── */
     .summary-bar {
@@ -603,7 +571,6 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
-      .creds-strip { grid-template-columns: repeat(3, 1fr); }
       .accept-grid { grid-template-columns: repeat(2, 1fr); }
       .cap-inner { grid-template-columns: 1fr; gap: 32px; }
       .submit-strip { grid-template-columns: 1fr; padding: 40px 20px; }
@@ -611,7 +578,6 @@
     }
 
     @media (max-width: 580px) {
-      .creds-strip { grid-template-columns: repeat(2, 1fr); }
       .build-card { grid-template-columns: 1fr; padding: 18px 16px; }
       .build-right { flex-direction: row; align-items: center; justify-content: space-between; }
       .eta-block { text-align: left; }
@@ -648,34 +614,6 @@
     <div class="section-label">Active Work</div>
     <h1>In Shop</h1>
     <p>Live build board, shop capabilities, and what we accept. Updated as work progresses.</p>
-  </div>
-
-  <!-- CREDENTIALS STRIP -->
-  <div class="creds-strip">
-    <div class="cred-item">
-      <div class="cred-dot"></div>
-      <span><strong>FFL 07</strong> &nbsp;Licensed Manufacturer</span>
-    </div>
-    <div class="cred-item">
-      <div class="cred-dot"></div>
-      <span><strong>SOT</strong> &nbsp;Tax Stamp Holder</span>
-    </div>
-    <div class="cred-item">
-      <div class="cred-dot"></div>
-      <span><strong>Class III</strong> &nbsp;Capable</span>
-    </div>
-    <div class="cred-item">
-      <div class="cred-dot"></div>
-      <span><strong>NFA Items</strong> &nbsp;Accepted</span>
-    </div>
-    <div class="cred-item">
-      <div class="cred-dot"></div>
-      <span><strong>80-Yard</strong> &nbsp;Private Range</span>
-    </div>
-    <div class="cred-item">
-      <div class="cred-dot"></div>
-      <span><strong>USCCA</strong> &nbsp;Certified Instruction</span>
-    </div>
   </div>
 
   <!-- ACTIVE BUILDS -->
