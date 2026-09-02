@@ -44,6 +44,7 @@
       --s-atf-approved:  #1a6b3a;
       --s-ready:         #1a5c1a;
       --success:         #4caf50;
+      --warning:         #e07b39;
     }
 
 
@@ -245,7 +246,7 @@
       letter-spacing: 1px;
       color: var(--silver);
     }
-    .timing-value.days-long { color: #e07b39; }
+    .timing-value.days-long { color: var(--warning); }
 
     /* ── BOARD HEADER ── */
     .board-header {
@@ -992,7 +993,7 @@
             </div>
             ${atfDays !== null ? `<div class="timing-item">
               <span class="atf-form-label">Days Pending</span>
-              <span class="atf-form-value" style="color:${atfDays > 60 ? '#e07b39' : 'var(--silver)'};">${atfDays}</span>
+              <span class="atf-form-value" style="color:${atfDays > 60 ? 'var(--warning)' : 'var(--silver)'};">${atfDays}</span>
             </div>` : ''}
             ${b.status === 'atf-approved' ? `<div class="atf-approved-tag">ATF Approved - Ready to Transfer</div>` : ''}
           </div>` : '';
