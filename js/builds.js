@@ -30,7 +30,7 @@ const builds = [
     eta: "2026-07-15",
     atf_form: "Form 3",
     atf_filed: "2026-06-05",
-    notes: "Build complete. Range session done — timing and headspace verified. ATF Form 3 submitted. Awaiting approval to transfer."
+    notes: "Build complete. Range session done, timing and headspace verified. ATF Form 3 submitted. Awaiting approval to transfer."
   },
   {
     title: "SBR Form 1 Build",

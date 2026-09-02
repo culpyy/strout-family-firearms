@@ -43,6 +43,7 @@
       --s-atf-filed:     #7a3d00;
       --s-atf-approved:  #1a6b3a;
       --s-ready:         #1a5c1a;
+      --success:         #4caf50;
     }
 
 
@@ -68,7 +69,7 @@
       line-height: 1;
       color: var(--text);
     }
-    .summary-stat .num.green { color: #4caf50; }
+    .summary-stat .num.green { color: var(--success); }
     .summary-stat .label {
       font-size: 10px;
       letter-spacing: 2px;
@@ -267,7 +268,7 @@
     .live-dot {
       width: 7px; height: 7px;
       border-radius: 50%;
-      background: #4caf50;
+      background: var(--success);
       flex-shrink: 0;
       animation: blink 2.2s ease-in-out infinite;
     }
@@ -347,7 +348,7 @@
       font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: #4caf50;
+      color: var(--success);
       margin-top: 10px;
     }
     .atf-approved-tag::before {
@@ -654,7 +655,7 @@
   <div class="atf-explainer">
     <div class="section-label">NFA Builds</div>
     <h2>The ATF Transfer Process</h2>
-    <p class="sub-copy">For NFA items — machine guns, suppressors, short-barreled rifles, and other regulated builds — federal law requires ATF approval before the firearm can leave our license and move to yours or your local FFL. Here's the full process so you know exactly where you stand.</p>
+    <p class="sub-copy">For NFA items - machine guns, suppressors, short-barreled rifles, and other regulated builds - federal law requires ATF approval before the firearm can leave our license and move to yours or your local FFL. Here's the full process so you know exactly where you stand.</p>
     <div class="atf-flow">
       <div class="atf-step">
         <div class="atf-step-num">Step 01</div>
@@ -664,7 +665,7 @@
       <div class="atf-step">
         <div class="atf-step-num">Step 02</div>
         <h4>ATF Form Filed</h4>
-        <p>We submit the appropriate ATF form — typically Form 3 to move to a receiving FFL, or Form 4 for individual transfers. We handle this on our end. We'll let you know when it goes in.</p>
+        <p>We submit the appropriate ATF form - typically Form 3 to move to a receiving FFL, or Form 4 for individual transfers. We handle this on our end. We'll let you know when it goes in.</p>
       </div>
       <div class="atf-step">
         <div class="atf-step-num">Step 03</div>
@@ -781,7 +782,7 @@
           An FFL 01 licenses a dealer to sell. An FFL 07 licenses a manufacturer to build, modify, and manufacture firearms commercially. Add the SOT Tax Stamp and we're authorized to manufacture and transfer NFA items, including suppressors, short-barreled rifles, and machine guns.
         </p>
         <p>
-          That's why we can take on work other shops in southern Maine won't touch. Machine gun restorations, Form 1 builds, suppressor manufacturing, Class III transfers — all of it is within our license scope.
+          That's why we can take on work other shops in southern Maine won't touch. Machine gun restorations, Form 1 builds, suppressor manufacturing, Class III transfers - all of it is within our license scope.
         </p>
         <p>
           Combined with 55+ years of combined shooting experience and a private 80-yard range on the property, we can do the full job from bench to function check without leaving the shop.
@@ -811,7 +812,7 @@
         </div>
         <div class="cap-fact">
           <div class="cap-fact-label">Experience</div>
-          <div class="cap-fact-text"><strong>55+ combined years.</strong> Machine gun restorations, rare military arms, precision builds — we've worked on things most shops have never seen.</div>
+          <div class="cap-fact-text"><strong>55+ combined years.</strong> Machine gun restorations, rare military arms, precision builds - we've worked on things most shops have never seen.</div>
         </div>
       </div>
     </div>
@@ -859,7 +860,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2024 Strout Family Firearms. All rights reserved.</p>
+      <p>&copy; 2024–2026 Strout Family Firearms. All rights reserved.</p>
       <span class="ffl-badge">FFL 07 · SOT · USCCA Certified</span>
     </div>
   </footer>
@@ -878,7 +879,7 @@
     };
 
     const stageDescriptions = {
-      'intake':        'In — being assessed',
+      'intake':        'In - being assessed',
       'parts-ordered': 'Waiting on parts',
       'in-progress':   'On the bench',
       'testing':       'On the range',
@@ -993,7 +994,7 @@
               <span class="atf-form-label">Days Pending</span>
               <span class="atf-form-value" style="color:${atfDays > 60 ? '#e07b39' : 'var(--silver)'};">${atfDays}</span>
             </div>` : ''}
-            ${b.status === 'atf-approved' ? `<div class="atf-approved-tag">ATF Approved &mdash; Ready to Transfer</div>` : ''}
+            ${b.status === 'atf-approved' ? `<div class="atf-approved-tag">ATF Approved - Ready to Transfer</div>` : ''}
           </div>` : '';
 
         const timingHtml = `
