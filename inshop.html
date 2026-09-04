@@ -427,6 +427,101 @@
       flex-shrink: 0;
     }
 
+    /* ── TRACK YOUR BUILD ── */
+    .search-wrap {
+      display: flex;
+      border: 1px solid var(--border);
+      margin: 24px 0 20px;
+    }
+    .search-wrap input {
+      flex: 1;
+      min-width: 0;
+      background: var(--surface);
+      border: none;
+      padding: 14px 18px;
+      font-family: 'Courier New', monospace;
+      font-size: 15px;
+      letter-spacing: 2px;
+      color: var(--text);
+      text-transform: uppercase;
+      outline: none;
+    }
+    .search-wrap input::placeholder {
+      color: var(--muted);
+      letter-spacing: 1px;
+      text-transform: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+    }
+    .search-wrap button {
+      flex-shrink: 0;
+      background: var(--red);
+      border: none;
+      padding: 14px 24px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 16px;
+      letter-spacing: 2px;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .search-wrap button:hover { background: var(--red-light); }
+
+    #trackError {
+      display: none;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--red);
+      padding: 18px 22px;
+      margin-bottom: 24px;
+    }
+    #trackError .err-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: 2px;
+      color: var(--text);
+      margin-bottom: 5px;
+    }
+    #trackError p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    #trackError p code {
+      font-family: 'Courier New', monospace;
+      color: var(--red-light);
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+    #trackResult { display: none; margin-bottom: 24px; }
+
+    .help-row {
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .help-row p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .help-row p strong { color: var(--silver); }
+    .help-row a {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 16px;
+      letter-spacing: 1.5px;
+      color: var(--red-light);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .help-row a:hover { color: var(--red); }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       .accept-grid { grid-template-columns: repeat(2, 1fr); }
@@ -459,7 +554,6 @@
       <li><a href="gallery.html">Gallery</a></li>
       <li><a href="inshop.html" class="active">In Shop</a></li>
       <li><a href="intake.html">Ship to Us</a></li>
-      <li><a href="track.html">Track</a></li>
       <li><a href="updates.html">Updates</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
@@ -488,6 +582,56 @@
     <h1>In Shop</h1>
     <p>Live build board, shop capabilities, and what we accept. Updated as work progresses.</p>
   </div>
+
+  <!-- TRACK YOUR BUILD -->
+  <section style="padding-bottom: 0;">
+    <div class="section-label">Have a Code?</div>
+    <h2 class="section-title">Track Your Build</h2>
+    <p class="section-sub">Look up your build by tracking code to see its current stage and progress.</p>
+
+    <div class="search-wrap">
+      <input type="text" id="codeInput" placeholder="SFF-2026-001" maxlength="14" autocomplete="off" />
+      <button type="button" onclick="runSearch()">Look Up</button>
+    </div>
+
+    <div id="trackError">
+      <div class="err-title" id="trackErrorTitle">No Build Found</div>
+      <p id="trackErrorBody">Check your code. It should look like <code>SFF-2026-001</code>. If you need help, <a href="tel:2073326999" style="color: var(--red-light);">give us a call</a>.</p>
+    </div>
+
+    <div id="trackResult">
+      <div class="build-card status-intake" id="rCard">
+        <div class="build-left">
+          <div class="build-title" id="rTitle"></div>
+          <div class="build-meta"><span id="rType"></span><span id="rCaliber"></span></div>
+          <div class="pipeline" id="rPipeline"></div>
+          <div class="progress-wrap">
+            <div class="progress-labels">
+              <span>Progress</span>
+              <span id="rProgressPct"></span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" id="rProgressFill"></div>
+            </div>
+          </div>
+          <div class="build-notes" id="rNotes" style="display:none;"></div>
+          <div class="build-timing" id="rTiming"></div>
+        </div>
+        <div class="build-right">
+          <div class="status-badge" id="rStatusBadge"></div>
+          <div class="eta-block" id="rEtaBlock" style="display:none;">
+            <div class="eta-label">Est. Complete</div>
+            <div class="eta-date" id="rEtaDate"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="help-row">
+      <p><strong>Can't find your code?</strong> It's on your intake receipt or your paperwork from drop-off.</p>
+      <a href="tel:2073326999">(207) 332-6999</a>
+    </div>
+  </section>
 
   <!-- ACTIVE BUILDS -->
   <section>
@@ -721,7 +865,6 @@
           <li><a href="gallery.html">Gallery</a></li>
           <li><a href="inshop.html">In Shop</a></li>
           <li><a href="intake.html">Ship to Us</a></li>
-          <li><a href="track.html">Track</a></li>
           <li><a href="updates.html">Updates</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
@@ -748,7 +891,7 @@
   <script>
     // STATUS_LABELS, STATUS_DESCRIPTIONS, BUILD_STAGES_STD, BUILD_STAGES_NFA,
     // calcProgress(), escapeHtml() all come from js/main.js - single source
-    // of truth shared with track.html and admin-dashboard.html.
+    // of truth shared with admin-dashboard.html.
 
     let builds = [];
 
@@ -949,6 +1092,118 @@
         await supabase.auth.signOut();
       } catch (err) {}
       location.reload();
+    }
+
+    // ── TRACK YOUR BUILD (folded in from the old standalone track.html,
+    //    per request - one page to check the board AND look up your own
+    //    build, instead of a separate nav destination) ──
+    function showTrackResult(b) {
+      document.getElementById('trackResult').style.display = 'block';
+      document.getElementById('trackError').style.display = 'none';
+
+      const card = document.getElementById('rCard');
+      card.className = 'build-card status-' + (b.status || '');
+
+      document.getElementById('rTitle').textContent = b.title || '';
+      document.getElementById('rType').textContent = b.type || '';
+      document.getElementById('rCaliber').textContent = b.caliber || '';
+
+      const badge = document.getElementById('rStatusBadge');
+      badge.textContent = STATUS_LABELS[b.status] || b.status || '';
+
+      const stages = b.is_nfa ? BUILD_STAGES_NFA : BUILD_STAGES_STD;
+      const si = stages.indexOf(b.status);
+      const progress = calcProgress(b.status, b.is_nfa);
+      document.getElementById('rProgressPct').textContent = progress + '%';
+      document.getElementById('rProgressFill').style.width = progress + '%';
+      document.getElementById('rPipeline').innerHTML = stages.map((s, i) =>
+        `<div class="pipeline-step ${i <= si ? 'done' : ''}" title="${escapeHtml(STATUS_LABELS[s])}"></div>`
+      ).join('');
+
+      const notesEl = document.getElementById('rNotes');
+      if (b.notes && b.notes.trim()) {
+        notesEl.textContent = b.notes;
+        notesEl.style.display = 'block';
+      } else {
+        notesEl.style.display = 'none';
+      }
+
+      const etaBlock = document.getElementById('rEtaBlock');
+      const eta = formatDate(b.eta);
+      if (eta) {
+        document.getElementById('rEtaDate').textContent = eta;
+        etaBlock.style.display = '';
+      } else {
+        etaBlock.style.display = 'none';
+      }
+
+      const timingBits = [];
+      if (b.received) {
+        timingBits.push(`<div class="timing-item">
+          <span class="timing-label">In Shop Since</span>
+          <span class="timing-value">${formatDate(b.received)}</span>
+        </div>`);
+      }
+      if (STATUS_DESCRIPTIONS[b.status]) {
+        timingBits.push(`<div class="timing-item">
+          <span class="timing-label">Current Stage</span>
+          <span class="timing-value" style="font-size:13px;font-family:'Inter',sans-serif;color:var(--muted);">${escapeHtml(STATUS_DESCRIPTIONS[b.status])}</span>
+        </div>`);
+      }
+      document.getElementById('rTiming').innerHTML = timingBits.join('');
+    }
+
+    // A real backend problem (network blip, RLS misconfig, Supabase down)
+    // must not look identical to "that code doesn't exist" - a customer
+    // with a genuinely correct code during an outage deserves "try again,"
+    // not "check your code."
+    function showTrackError(kind) {
+      document.getElementById('trackResult').style.display = 'none';
+      document.getElementById('trackError').style.display = 'block';
+      const title = document.getElementById('trackErrorTitle');
+      const body = document.getElementById('trackErrorBody');
+      if (kind === 'server') {
+        title.textContent = 'Something Went Wrong';
+        body.innerHTML = `We couldn't complete that lookup just now. Please try again in a moment, or <a href="tel:2073326999" style="color: var(--red-light);">give us a call</a>.`;
+      } else {
+        title.textContent = 'No Build Found';
+        body.innerHTML = `Check your code. It should look like <code>SFF-2026-001</code>. If you need help, <a href="tel:2073326999" style="color: var(--red-light);">give us a call</a>.`;
+      }
+    }
+
+    let trackSearchToken = 0;
+
+    async function runSearch() {
+      const raw = document.getElementById('codeInput').value.trim().toUpperCase();
+      if (!raw) return;
+      const thisSearch = ++trackSearchToken;
+      try {
+        const { data, error } = await supabase
+          .from('builds_public').select('*').eq('tracking_code', raw).single();
+        if (thisSearch !== trackSearchToken) return;
+        if (error && error.code !== 'PGRST116') {
+          showTrackError('server');
+        } else if (error || !data) {
+          showTrackError('notfound');
+        } else {
+          showTrackResult(data);
+          window.history.replaceState(null, '', '?code=' + encodeURIComponent(raw));
+        }
+      } catch (err) {
+        if (thisSearch !== trackSearchToken) return;
+        showTrackError('server');
+      }
+    }
+
+    document.getElementById('codeInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') runSearch();
+    });
+
+    const trackParams = new URLSearchParams(location.search);
+    const autoTrackCode = trackParams.get('code');
+    if (autoTrackCode) {
+      document.getElementById('codeInput').value = autoTrackCode.toUpperCase();
+      runSearch();
     }
   </script>
 </body>

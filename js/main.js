@@ -1,4 +1,4 @@
-// Shared build-status logic (used by inshop.html, track.html, admin-dashboard.html)
+// Shared build-status logic (used by inshop.html, admin-dashboard.html)
 
 // Build pipeline stages - single source of truth so the stage list and
 // progress math can't drift between pages. Adaptive: standard builds skip
