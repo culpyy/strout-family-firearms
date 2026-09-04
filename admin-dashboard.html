@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <title>Admin Dashboard | Strout Family Firearms</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body { background: var(--bg); }
+
+    /* ── ADMIN HEADER ── */
+    .admin-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 64px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+    }
+    .admin-brand {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      letter-spacing: 2px;
+      color: var(--text);
+    }
+    .admin-brand span {
+      color: var(--red-light);
+      margin-left: 10px;
+      font-size: 12px;
+      letter-spacing: 3px;
+    }
+    .admin-header-actions { display: flex; align-items: center; gap: 20px; }
+    .view-site-link {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .view-site-link:hover { color: var(--text); }
+    .btn-signout {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 14px;
+      letter-spacing: 2px;
+      padding: 8px 18px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-signout:hover { border-color: var(--muted); color: var(--text); }
+
+    /* ── TAB NAV ── */
+    .tab-nav {
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      z-index: 99;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      padding: 0 32px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .tab-btn {
+      flex-shrink: 0;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--muted);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 15px;
+      letter-spacing: 2px;
+      padding: 14px 24px;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .tab-btn:hover { color: var(--silver); }
+    .tab-btn.active { color: var(--red-light); border-bottom-color: var(--red-light); }
+    .tab-btn .count-badge {
+      display: inline-block;
+      background: var(--red);
+      color: #fff;
+      border-radius: 10px;
+      font-size: 10px;
+      padding: 1px 7px;
+      margin-left: 6px;
+    }
+
+    /* ── MAIN ── */
+    .admin-main { margin-top: 112px; padding: 32px; max-width: 1200px; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .section-hd {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .section-hd h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      letter-spacing: 2px;
+      color: var(--text);
+    }
+    .section-note {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+      max-width: 640px;
+    }
+
+    /* ── BUTTONS ── */
+    .btn-add {
+      background: var(--red);
+      color: #fff;
+      border: 1px solid var(--red);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 14px;
+      letter-spacing: 2px;
+      padding: 10px 22px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-add:hover { background: var(--red-light); border-color: var(--red-light); }
+    .btn-save {
+      background: var(--red);
+      color: #fff;
+      border: 1px solid var(--red);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      padding: 10px 24px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-save:hover { background: var(--red-light); border-color: var(--red-light); }
+    .btn-cancel {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      padding: 10px 24px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-cancel:hover { border-color: var(--silver); color: var(--text); }
+    .btn-edit {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--red-light);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 11px;
+      letter-spacing: 1px;
+      padding: 5px 12px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-edit:hover { background: var(--red); color: #fff; border-color: var(--red); }
+    .btn-delete {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 11px;
+      letter-spacing: 1px;
+      padding: 5px 12px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-delete:hover { background: #6b1414; color: #fff; border-color: #6b1414; }
+    .btn-delete:disabled { opacity: 0.35; cursor: not-allowed; }
+    .btn-delete:disabled:hover { background: transparent; color: var(--muted); border-color: var(--border); }
+
+    /* ── FORM CARD / MODAL ── */
+    .form-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--red);
+      padding: 24px 28px;
+    }
+    .form-card h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      letter-spacing: 2px;
+      color: var(--text);
+      margin-bottom: 18px;
+    }
+    .form-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+    }
+    .form-modal-overlay.open { display: flex; }
+    .form-modal-overlay .form-card {
+      max-width: 900px;
+      width: 100%;
+      max-height: 92vh;
+      overflow-y: auto;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-field { display: flex; flex-direction: column; gap: 6px; }
+    .form-field.full { grid-column: 1 / -1; }
+    .form-field label {
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 14px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus { border-color: var(--red-light); }
+    .form-field select { cursor: pointer; }
+    .form-field textarea { resize: vertical; min-height: 64px; }
+    .form-field-check { display: flex; align-items: center; gap: 10px; }
+    .form-field-check input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--red-light); cursor: pointer; }
+    .form-field-check label { cursor: pointer; font-size: 12px; letter-spacing: 0.5px; text-transform: none; color: var(--silver); }
+    .form-section-label {
+      grid-column: 1 / -1;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--red-light);
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      margin-top: 4px;
+    }
+    .form-actions { display: flex; gap: 12px; margin-top: 22px; }
+    .tracking-code-display {
+      font-family: 'Courier New', monospace;
+      font-size: 15px;
+      letter-spacing: 2px;
+      color: var(--red-light);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+    }
+
+    /* ── DATA TABLE ── */
+    .data-table { width: 100%; border-collapse: separate; border-spacing: 0; background: var(--surface); }
+    .data-table th {
+      text-align: left;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      font-weight: 500;
+    }
+    .data-table td {
+      padding: 12px 14px;
+      font-size: 13px;
+      color: var(--silver);
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .data-table tr:hover td { background: var(--surface2); }
+    .data-table td.title { color: var(--text); font-weight: 500; }
+    .table-wrap { overflow-x: auto; }
+    .row-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+    .progress-cell { display: flex; align-items: center; gap: 8px; min-width: 90px; }
+    .progress-cell .progress-bar { flex: 1; }
+    .progress-cell .progress-pct { font-size: 11px; color: var(--muted); white-space: nowrap; }
+    .empty-state {
+      padding: 40px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+    .unread-dot {
+      display: inline-block;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--red-light);
+      margin-right: 8px;
+    }
+    .row-unread td { color: var(--text); }
+    .detail-row td {
+      background: var(--surface2);
+      padding: 16px 20px;
+      font-size: 13px;
+      color: var(--silver);
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+    .read-pill, .unread-pill, .nfa-pill {
+      display: inline-block;
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 2px;
+    }
+    .read-pill { color: var(--muted); border: 1px solid var(--border); }
+    .unread-pill { color: var(--red-light); border: 1px solid var(--red); }
+    .nfa-pill { color: var(--warning); border: 1px solid var(--warning); }
+
+    /* ── GALLERY ── */
+    .showcase-star {
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      color: var(--border);
+      transition: color 0.2s;
+      line-height: 1;
+    }
+    .showcase-star.active { color: var(--red-light); }
+    .showcase-star:hover { color: var(--red-light); }
+    .qg-media-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 10px;
+      min-width: 0;
+    }
+    .qg-thumb { width: 56px; height: 56px; object-fit: cover; flex-shrink: 0; background: var(--surface2); }
+    .qg-thumb-video {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 16px;
+    }
+    .qg-media-fields { flex: 1; min-width: 160px; display: flex; flex-direction: column; gap: 8px; }
+    .qg-media-fields input[type="text"] {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 10px;
+      font-size: 13px;
+    }
+    .qg-poster-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .qg-poster-row span { font-size: 11px; color: var(--muted); white-space: nowrap; }
+    .qg-poster-preview { width: 32px; height: 32px; object-fit: cover; border: 1px solid var(--border); }
+    .thumb-video-placeholder {
+      width: 44px; height: 44px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--surface2);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* ── DANGER MODAL ── */
+    .code-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 210;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .code-modal-overlay.open { display: flex; }
+    .code-modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: 3px solid #8B1414;
+      padding: 36px;
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+    }
+    .code-modal-eyebrow { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #e08080; margin-bottom: 8px; }
+    .code-modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 2px; color: var(--text); margin-bottom: 18px; }
+    .code-modal-sub { font-size: 12px; color: var(--muted); line-height: 1.7; margin-bottom: 18px; text-align: left; }
+    .code-modal-sub strong { color: var(--silver); }
+    .code-modal-input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 14px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-family: 'Courier New', monospace;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .code-modal-actions { display: flex; gap: 12px; justify-content: center; }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--red-light);
+      padding: 14px 20px;
+      font-size: 13px;
+      color: var(--silver);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+      z-index: 999;
+      max-width: 340px;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 700px) {
+      .admin-main { padding: 20px 16px; overflow-x: hidden; }
+      .admin-header { padding: 0 16px; }
+      .tab-nav { padding: 0 16px; }
+      .tab-btn { padding: 12px 14px; font-size: 13px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-modal-overlay .form-card { padding: 20px 16px; }
+      .row-actions { flex-direction: column; align-items: stretch; }
+      .row-actions button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="admin-header">
+    <div class="admin-brand">Strout Family Firearms <span>Admin</span></div>
+    <div class="admin-header-actions">
+      <a href="index.html" class="view-site-link">View Site</a>
+      <button class="btn-signout" id="signoutBtn">Sign Out</button>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tab-nav">
+    <button class="tab-btn active" data-tab="builds">Builds</button>
+    <button class="tab-btn" data-tab="gallery">Gallery</button>
+    <button class="tab-btn" data-tab="messages" id="messagesTabBtn">Messages</button>
+    <button class="tab-btn" data-tab="intake" id="intakeTabBtn">Intake</button>
+  </div>
+
+  <div class="admin-main">
+
+    <!-- ── BUILDS TAB ── -->
+    <div class="tab-panel active" id="tab-builds">
+      <div class="section-hd">
+        <h2>Active Builds</h2>
+        <button class="btn-add" id="addBuildBtn">+ New Build</button>
+      </div>
+
+      <div class="table-wrap" id="buildsTable"></div>
+
+      <div class="section-hd" style="margin-top:36px;">
+        <h2>Completed Builds <span id="completedCount" style="color:var(--muted);font-size:15px;font-weight:400;letter-spacing:0;"></span></h2>
+        <button class="btn-edit" id="toggleCompletedBtn">Show</button>
+      </div>
+      <div class="table-wrap" id="completedBuildsTable" style="display:none;"></div>
+    </div>
+
+    <!-- ── GALLERY TAB ── -->
+    <div class="tab-panel" id="tab-gallery">
+      <div class="section-hd">
+        <h2>Gallery Projects</h2>
+        <button class="btn-add" id="addGalleryBtn">+ Add Project</button>
+      </div>
+      <div class="table-wrap" id="galleryTable"></div>
+    </div>
+
+    <!-- ── MESSAGES TAB ── -->
+    <div class="tab-panel" id="tab-messages">
+      <div class="section-hd">
+        <h2>Contact Messages</h2>
+      </div>
+      <div class="table-wrap" id="messagesTable"></div>
+    </div>
+
+    <!-- ── INTAKE TAB ── -->
+    <div class="tab-panel" id="tab-intake">
+      <div class="section-hd">
+        <h2>Incoming Shipments</h2>
+      </div>
+      <p class="section-note">Submitted from the "Ship to Us" intake wizard before a customer mails in a firearm or kit. Create Build pre-fills a new build from what they gave us - title and public notes are left for you to fill in.</p>
+      <div class="table-wrap" id="intakeTable"></div>
+    </div>
+
+  </div>
+
+  <!-- BUILD FORM MODAL (Add + Edit) -->
+  <div class="form-modal-overlay" id="buildFormOverlay">
+    <div class="form-card" id="buildForm">
+      <h3 id="buildFormTitle">Add New Build</h3>
+      <input type="hidden" id="buildId" />
+      <div class="form-grid">
+        <div class="form-field full">
+          <label>Title</label>
+          <input type="text" id="b-title" placeholder="Vickers Mk.I Restoration" required />
+        </div>
+        <div class="form-field">
+          <label>Type</label>
+          <input type="text" id="b-type" placeholder="e.g. Rifle, SBR, Water-Cooled HMG" />
+        </div>
+        <div class="form-field">
+          <label>Caliber</label>
+          <input type="text" id="b-caliber" placeholder="7.62x51mm NATO" />
+        </div>
+        <div class="form-field-check" style="grid-column: span 1; align-self: end;">
+          <input type="checkbox" id="b-is-nfa" />
+          <label for="b-is-nfa">NFA Item (adds the ATF pipeline stages)</label>
+        </div>
+        <div class="form-field">
+          <label>Status</label>
+          <select id="b-status"></select>
+        </div>
+        <div class="form-field">
+          <label>Date Received</label>
+          <input type="date" id="b-received" />
+        </div>
+        <div class="form-field">
+          <label>ETA (optional)</label>
+          <input type="date" id="b-eta" />
+        </div>
+        <div class="form-field" id="b-atf-form-wrap" style="display:none;">
+          <label>ATF Form (optional)</label>
+          <input type="text" id="b-atf-form" placeholder="Form 1, Form 3, Form 4..." />
+        </div>
+        <div class="form-field" id="b-atf-filed-wrap" style="display:none;">
+          <label>ATF Filed Date (optional)</label>
+          <input type="date" id="b-atf-filed" />
+        </div>
+        <div class="form-field full">
+          <label>Notes (public-facing, shown on the In Shop board)</label>
+          <textarea id="b-notes" placeholder="Short note visible to customers..."></textarea>
+        </div>
+        <div class="form-field full">
+          <label style="color:var(--red-light);">Internal Notes (shop only, never shown to the customer)</label>
+          <textarea id="b-internal-notes" placeholder="e.g. customer wants blued not parkerized, waiting on a callback about the stock swap..."></textarea>
+        </div>
+
+        <div class="form-section-label">Customer &amp; Tracking</div>
+        <div class="form-field">
+          <label>Tracking Code</label>
+          <div class="tracking-code-display" id="b-tracking-code-display">Generated on save</div>
+          <input type="hidden" id="b-tracking-code" />
+        </div>
+        <div class="form-field">
+          <label>Customer Name</label>
+          <input type="text" id="b-customer-name" placeholder="John Smith" />
+        </div>
+        <div class="form-field">
+          <label>Customer Email</label>
+          <input type="email" id="b-customer-email" placeholder="customer@email.com" />
+        </div>
+        <div class="form-field">
+          <label>Customer Phone</label>
+          <input type="tel" id="b-customer-phone" placeholder="(207) 332-6999" />
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-save" id="saveBuildBtn">Save Build</button>
+        <button class="btn-cancel" id="cancelBuildBtn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DELETE BUILD CONFIRM MODAL -->
+  <!-- Requires typing the exact tracking code (not a plain confirm()) -
+       added after a real accidental-deletion incident on the sister GVG
+       project, where one reflexive OK-click deleted a customer's build
+       with no record of who did it or whether it was intentional. Typing
+       the code out forces actually reading what's about to be deleted. -->
+  <div class="code-modal-overlay" id="deleteBuildModalOverlay">
+    <div class="code-modal">
+      <div class="code-modal-eyebrow">Danger Zone</div>
+      <div class="code-modal-title">Delete This Build?</div>
+      <p class="code-modal-sub" id="deleteBuildSummary"></p>
+      <p class="code-modal-sub">This permanently deletes the build - there's no undo. To confirm, type the tracking code shown below:</p>
+      <input type="text" id="deleteBuildConfirmInput" class="code-modal-input" placeholder="Type tracking code here" autocomplete="off" />
+      <div class="code-modal-actions">
+        <button class="btn-delete" id="confirmDeleteBuildBtn" disabled>Delete Permanently</button>
+        <button class="btn-cancel" id="cancelDeleteBuildBtn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GALLERY PROJECT FORM MODAL -->
+  <div class="form-modal-overlay" id="galleryFormOverlay">
+    <div class="form-card" id="galleryForm">
+      <h3 id="galleryFormTitle">Add Gallery Project</h3>
+      <div class="form-grid">
+        <div class="form-field full">
+          <label>Title</label>
+          <input type="text" id="qg-title" placeholder="AR-15 Cerakote Refinish" />
+        </div>
+        <div class="form-field">
+          <label>Type (optional)</label>
+          <input type="text" id="qg-type" placeholder="e.g. Rifle, SBR, Light Machine Gun" />
+        </div>
+        <div class="form-field">
+          <label>Caliber (optional)</label>
+          <input type="text" id="qg-caliber" placeholder="5.56 NATO" />
+        </div>
+        <div class="form-field-check full">
+          <input type="checkbox" id="qg-is-showcase" />
+          <label for="qg-is-showcase">Always showcase (skips the normal gallery rotation)</label>
+        </div>
+        <div class="form-field full">
+          <label>Photos &amp; Video</label>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:10px;">Add as many as this project needs. Photos and video files are both accepted - a video gets an optional poster image so it doesn't show a blank box before playback. Displayed in the order added.</div>
+          <div id="qg-media-list" style="display:flex;flex-direction:column;gap:10px;margin-bottom:12px;"></div>
+          <input type="file" id="qg-files" accept="image/*,video/*" multiple />
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-save" id="saveGalleryBtn">Add Project</button>
+        <button class="btn-cancel" id="cancelGalleryBtn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    // ── AUTH GUARD ──
+    // UX only - the real security boundary is Postgres RLS via is_admin()
+    // (see sql/001_admin.sql). This redirect just keeps a signed-out
+    // browser from seeing the dashboard shell at all. A signed-in-but-
+    // non-admin session (shouldn't be possible once public signup is
+    // disabled per the go-live checklist, but still) would pass this check
+    // fine and then watch every real read/write below fail with an RLS
+    // error - that failure, not this redirect, is what actually keeps them
+    // locked out of the data.
+    (async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) window.location.href = 'admin.html';
+      } catch (err) {
+        console.error('getSession failed (expected with placeholder Supabase config):', err);
+        window.location.href = 'admin.html';
+      }
+    })();
+
+    document.getElementById('signoutBtn').addEventListener('click', async () => {
+      try { await supabase.auth.signOut(); } catch (err) { console.error('Sign out failed:', err); }
+      window.location.href = 'admin.html';
+    });
+
+    // ── TOAST ──
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(showToast._timer);
+      showToast._timer = setTimeout(() => t.classList.remove('show'), 3200);
+    }
+
+    // ── DATE HELPERS ──
+    function formatDate(dateStr) {
+      if (!dateStr) return '—';
+      const d = new Date(dateStr + 'T00:00:00');
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+    function formatDateTime(isoStr) {
+      if (!isoStr) return '—';
+      return new Date(isoStr).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+    }
+
+    // ── TABS ──
+    function activateTab(tabName) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      const btn = document.querySelector(`.tab-btn[data-tab="${tabName}"]`);
+      if (btn) btn.classList.add('active');
+      document.getElementById('tab-' + tabName).classList.add('active');
+    }
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => activateTab(btn.dataset.tab));
+    });
+
+    // ══════════════════════════════════════════════════════════
+    // BUILDS
+    // ══════════════════════════════════════════════════════════
+
+    let buildsAllRows = [];
+
+    // Derived from the highest SFF-YYYY-NNN code already issued this year,
+    // not a row count - a count-based scheme collides forever once a build
+    // is ever deleted (the count drops but the code already in use doesn't).
+    async function generateTrackingCode(offset = 0) {
+      const year = new Date().getFullYear();
+      const { data, error } = await supabase
+        .from('builds')
+        .select('tracking_code')
+        .like('tracking_code', `SFF-${year}-%`)
+        .order('tracking_code', { ascending: false })
+        .limit(1);
+      if (error) throw error;
+      const last = data && data[0] ? parseInt(data[0].tracking_code.split('-')[2], 10) : 0;
+      const num = String((Number.isFinite(last) ? last : 0) + 1 + offset).padStart(3, '0');
+      return `SFF-${year}-${num}`;
+    }
+
+    // Fills #b-status from the centralized stage lists in js/main.js so the
+    // dropdown can never drift out of sync with calcProgress()/the public
+    // board. Re-run every time the NFA checkbox toggles, since standard and
+    // NFA builds have different stage lists entirely (not just a couple of
+    // extra options at the end).
+    function populateStatusSelect(isNfa, currentValue) {
+      const stages = isNfa ? BUILD_STAGES_NFA : BUILD_STAGES_STD;
+      const select = document.getElementById('b-status');
+      select.innerHTML = stages.map(s => `<option value="${s}">${escapeHtml(STATUS_LABELS[s] || s)}</option>`).join('');
+      select.value = stages.includes(currentValue) ? currentValue : stages[0];
+    }
+
+    function toggleAtfFields() {
+      const show = document.getElementById('b-is-nfa').checked;
+      document.getElementById('b-atf-form-wrap').style.display = show ? '' : 'none';
+      document.getElementById('b-atf-filed-wrap').style.display = show ? '' : 'none';
+    }
+    document.getElementById('b-is-nfa').addEventListener('change', () => {
+      const current = document.getElementById('b-status').value;
+      populateStatusSelect(document.getElementById('b-is-nfa').checked, current);
+      toggleAtfFields();
+    });
+
+    async function openBuildForm(build) {
+      document.getElementById('buildFormTitle').textContent = build ? 'Edit Build' : 'Add New Build';
+      document.getElementById('buildId').value = build ? build.id : '';
+      document.getElementById('b-title').value = build ? build.title : '';
+      document.getElementById('b-type').value = build ? (build.type || '') : '';
+      document.getElementById('b-caliber').value = build ? (build.caliber || '') : '';
+      document.getElementById('b-is-nfa').checked = build ? !!build.is_nfa : false;
+      populateStatusSelect(document.getElementById('b-is-nfa').checked, build ? build.status : 'intake');
+      toggleAtfFields();
+      document.getElementById('b-received').value = build ? (build.received || '') : new Date().toLocaleDateString('en-CA');
+      document.getElementById('b-eta').value = build ? (build.eta || '') : '';
+      document.getElementById('b-atf-form').value = build ? (build.atf_form || '') : '';
+      document.getElementById('b-atf-filed').value = build ? (build.atf_filed || '') : '';
+      document.getElementById('b-notes').value = build ? (build.notes || '') : '';
+      document.getElementById('b-internal-notes').value = build ? (build.internal_notes || '') : '';
+      document.getElementById('b-customer-name').value = build ? (build.customer_name || '') : '';
+      document.getElementById('b-customer-email').value = build ? (build.customer_email || '') : '';
+      document.getElementById('b-customer-phone').value = build ? (build.customer_phone || '') : '';
+
+      // Tracking codes are only ever generated fresh here (Add New, or
+      // Create Build from an intake row) - editing an existing build keeps
+      // whatever code it already has, never regenerates it.
+      if (build && build.tracking_code) {
+        document.getElementById('b-tracking-code').value = build.tracking_code;
+        document.getElementById('b-tracking-code-display').textContent = build.tracking_code;
+      } else {
+        document.getElementById('b-tracking-code').value = '';
+        document.getElementById('b-tracking-code-display').textContent = 'Generating...';
+        try {
+          const code = await generateTrackingCode();
+          document.getElementById('b-tracking-code').value = code;
+          document.getElementById('b-tracking-code-display').textContent = code;
+        } catch (err) {
+          // Expected during this code-readiness pass (placeholder Supabase
+          // config) - degrade gracefully instead of blocking the form.
+          // Save still works; a code just won't be assigned until the
+          // dashboard can actually reach Supabase.
+          console.error('Failed to generate tracking code:', err);
+          document.getElementById('b-tracking-code-display').textContent = 'Could not generate - check your Supabase config. You can still save.';
+        }
+      }
+
+      document.getElementById('buildFormOverlay').classList.add('open');
+      document.getElementById('buildForm').scrollTop = 0;
+    }
+    function closeBuildForm() {
+      document.getElementById('buildFormOverlay').classList.remove('open');
+    }
+    document.getElementById('addBuildBtn').addEventListener('click', () => openBuildForm(null));
+    document.getElementById('cancelBuildBtn').addEventListener('click', closeBuildForm);
+
+    function editBuild(id) {
+      const build = buildsAllRows.find(b => b.id === id);
+      if (build) openBuildForm(build);
+    }
+
+    document.getElementById('saveBuildBtn').addEventListener('click', async () => {
+      const title = document.getElementById('b-title').value.trim();
+      if (!title) { showToast('Title is required.'); return; }
+
+      const id = document.getElementById('buildId').value;
+      const isNew = !id;
+      const isNfa = document.getElementById('b-is-nfa').checked;
+
+      const payload = {
+        title,
+        type: document.getElementById('b-type').value.trim() || null,
+        caliber: document.getElementById('b-caliber').value.trim() || null,
+        status: document.getElementById('b-status').value,
+        is_nfa: isNfa,
+        received: document.getElementById('b-received').value || null,
+        eta: document.getElementById('b-eta').value || null,
+        atf_form: isNfa ? (document.getElementById('b-atf-form').value.trim() || null) : null,
+        atf_filed: isNfa ? (document.getElementById('b-atf-filed').value || null) : null,
+        notes: document.getElementById('b-notes').value.trim() || null,
+        internal_notes: document.getElementById('b-internal-notes').value.trim() || null,
+        customer_name: document.getElementById('b-customer-name').value.trim() || null,
+        customer_email: document.getElementById('b-customer-email').value.trim() || null,
+        customer_phone: document.getElementById('b-customer-phone').value.trim() || null
+      };
+
+      const saveBtn = document.getElementById('saveBuildBtn');
+      saveBtn.disabled = true;
+
+      let error;
+      let trackingCode = document.getElementById('b-tracking-code').value || null;
+      // Retries only ever actually matter for a fresh insert - a collision
+      // on update would mean this row's own already-unique code somehow
+      // violates its own constraint, which can't happen. Kept generic (not
+      // isNew-gated) so the exact same path handles both, matching how the
+      // rest of this form doesn't special-case new vs. edit either.
+      for (let attempt = 0; attempt < 3; attempt++) {
+        const withCode = { ...payload, tracking_code: trackingCode };
+        ({ error } = id
+          ? await supabase.from('builds').update(withCode).eq('id', id)
+          : await supabase.from('builds').insert(withCode));
+        if (!error || error.code !== '23505') break;
+        try {
+          trackingCode = await generateTrackingCode(attempt + 1);
+        } catch (genErr) {
+          error = genErr;
+          break;
+        }
+      }
+
+      saveBtn.disabled = false;
+      if (error) {
+        showToast('Error saving build: ' + (error.message || 'check your Supabase config.'));
+        return;
+      }
+
+      closeBuildForm();
+      loadBuilds();
+      showToast(isNew ? `Build added${trackingCode ? ' - ' + trackingCode : ''}.` : 'Build updated.');
+    });
+
+    async function markBuildComplete(id) {
+      const { error } = await supabase.from('builds').update({ completed_at: new Date().toISOString() }).eq('id', id);
+      if (error) { showToast('Error: ' + error.message); return; }
+      showToast('Marked complete.');
+      loadBuilds();
+    }
+    async function reopenBuild(id) {
+      const { error } = await supabase.from('builds').update({ completed_at: null }).eq('id', id);
+      if (error) { showToast('Error: ' + error.message); return; }
+      showToast('Moved back to active builds.');
+      loadBuilds();
+    }
+
+    let pendingDeleteBuildId = null;
+    let pendingDeleteConfirmText = null;
+
+    function deleteBuild(id) {
+      const build = buildsAllRows.find(b => b.id === id);
+      if (!build) return;
+      pendingDeleteBuildId = id;
+      pendingDeleteConfirmText = (build.tracking_code || build.title || '').toUpperCase();
+      document.getElementById('deleteBuildSummary').innerHTML =
+        `<strong>${escapeHtml(build.title)}</strong><br>${escapeHtml(build.tracking_code) || 'No tracking code'} &middot; ${escapeHtml(build.customer_name) || 'No customer name on file'}`;
+      const input = document.getElementById('deleteBuildConfirmInput');
+      input.value = '';
+      input.placeholder = build.tracking_code ? `Type ${build.tracking_code} here` : `Type "${build.title}" here`;
+      document.getElementById('confirmDeleteBuildBtn').disabled = true;
+      document.getElementById('deleteBuildModalOverlay').classList.add('open');
+      input.focus();
+    }
+    function closeDeleteBuildModal() {
+      pendingDeleteBuildId = null;
+      pendingDeleteConfirmText = null;
+      document.getElementById('deleteBuildModalOverlay').classList.remove('open');
+    }
+    document.getElementById('deleteBuildConfirmInput').addEventListener('input', (e) => {
+      const match = pendingDeleteConfirmText && e.target.value.trim().toUpperCase() === pendingDeleteConfirmText;
+      document.getElementById('confirmDeleteBuildBtn').disabled = !match;
+    });
+    document.getElementById('cancelDeleteBuildBtn').addEventListener('click', closeDeleteBuildModal);
+    document.getElementById('confirmDeleteBuildBtn').addEventListener('click', async () => {
+      if (!pendingDeleteBuildId) return;
+      const id = pendingDeleteBuildId;
+      closeDeleteBuildModal();
+      const { error } = await supabase.from('builds').delete().eq('id', id);
+      if (error) { showToast('Error: ' + error.message); return; }
+      showToast('Build deleted.');
+      loadBuilds();
+    });
+
+    function buildRowActions(b, isCompleted) {
+      const actions = [`<button class="btn-edit" onclick="editBuild('${b.id}')">Edit</button>`];
+      if (isCompleted) {
+        actions.push(`<button class="btn-edit" onclick="reopenBuild('${b.id}')">Reopen</button>`);
+      } else {
+        actions.push(`<button class="btn-save" style="padding:5px 12px;font-size:11px;" onclick="markBuildComplete('${b.id}')">Mark Complete</button>`);
+      }
+      actions.push(`<button class="btn-delete" onclick="deleteBuild('${b.id}')">Delete</button>`);
+      return actions.join('');
+    }
+
+    function renderBuildRow(b, isCompleted) {
+      const progress = calcProgress(b.status, b.is_nfa);
+      return `
+        <tr class="status-${escapeHtml(b.status)}">
+          <td style="font-family:'Courier New',monospace;font-size:12px;color:var(--red-light);letter-spacing:1px;">${escapeHtml(b.tracking_code) || '—'}</td>
+          <td class="title">${escapeHtml(b.title)}</td>
+          <td style="font-size:12px;">${[b.type, b.caliber].filter(Boolean).map(escapeHtml).join(' · ') || '—'}</td>
+          <td><span class="status-badge">${escapeHtml(STATUS_LABELS[b.status] || b.status)}</span></td>
+          <td>
+            <div class="progress-cell">
+              <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
+              <span class="progress-pct">${progress}%</span>
+            </div>
+          </td>
+          <td style="font-size:12px;">${formatDate(b.received)}</td>
+          <td style="font-size:12px;">${formatDate(b.eta)}</td>
+          <td><div class="row-actions">${buildRowActions(b, isCompleted)}</div></td>
+        </tr>`;
+    }
+
+    function renderBuildsTable(container, rows, isCompleted) {
+      if (rows.length === 0) {
+        container.innerHTML = `<div class="empty-state">No ${isCompleted ? 'completed builds yet' : 'active builds. Click "+ New Build" to get started.'}</div>`;
+        return;
+      }
+      container.innerHTML = `
+        <table class="data-table">
+          <thead><tr>
+            <th>Tracking Code</th><th>Title</th><th>Type / Caliber</th><th>Status</th><th>Progress</th><th>Received</th><th>ETA</th><th></th>
+          </tr></thead>
+          <tbody>${rows.map(b => renderBuildRow(b, isCompleted)).join('')}</tbody>
+        </table>`;
+    }
+
+    async function loadBuilds() {
+      const activeContainer = document.getElementById('buildsTable');
+      const completedContainer = document.getElementById('completedBuildsTable');
+      try {
+        const { data, error } = await supabase.from('builds').select('*').order('created_at', { ascending: false });
+        if (error) throw error;
+        buildsAllRows = data || [];
+      } catch (err) {
+        console.error('loadBuilds failed:', err);
+        buildsAllRows = [];
+        activeContainer.innerHTML = '<div class="empty-state">Couldn\'t load builds - check your Supabase config.</div>';
+        completedContainer.innerHTML = '';
+        document.getElementById('completedCount').textContent = '';
+        return;
+      }
+      const active = buildsAllRows.filter(b => !b.completed_at);
+      const completed = buildsAllRows.filter(b => b.completed_at)
+        .sort((a, b) => new Date(b.completed_at) - new Date(a.completed_at));
+      renderBuildsTable(activeContainer, active, false);
+      renderBuildsTable(completedContainer, completed, true);
+      document.getElementById('completedCount').textContent = completed.length ? `(${completed.length})` : '';
+    }
+
+    let completedExpanded = false;
+    document.getElementById('toggleCompletedBtn').addEventListener('click', () => {
+      completedExpanded = !completedExpanded;
+      document.getElementById('completedBuildsTable').style.display = completedExpanded ? '' : 'none';
+      document.getElementById('toggleCompletedBtn').textContent = completedExpanded ? 'Hide' : 'Show';
+    });
+
+    // ══════════════════════════════════════════════════════════
+    // GALLERY
+    // ══════════════════════════════════════════════════════════
+
+    let galleryAllRows = [];
+    let editingGalleryProjectId = null;
+    // Each entry: { photoId: existing gallery_project_photos.id or null,
+    // file: new File pending upload or null, url: photo_url (existing or
+    // just-uploaded), previewUrl: for the thumbnail, label, mediaType:
+    // 'image'|'video', posterFile/posterUrl/posterPreviewUrl: same idea
+    // for a video's poster frame. Array order becomes each photo's
+    // `position` on save.
+    let qgMedia = [];
+    let qgRemoved = [];
+
+    // Only ever matches an object actually stored in OUR site-media
+    // bucket. The 4 seeded gallery projects (sql/007_gallery_seed.sql)
+    // point at relative images/... paths served straight from the repo via
+    // GitHub Pages, not Storage - this is a deliberate no-op for those
+    // instead of an error, since there's nothing in Storage to delete.
+    function storagePathFromUrl(url) {
+      if (!url) return null;
+      const marker = '/storage/v1/object/public/site-media/';
+      const idx = url.indexOf(marker);
+      if (idx === -1) return null;
+      return url.slice(idx + marker.length);
+    }
+    async function deleteGalleryStorageObject(url) {
+      const path = storagePathFromUrl(url);
+      if (!path) return;
+      try {
+        await supabase.storage.from('site-media').remove([path]);
+      } catch (err) {
+        console.error('Failed to delete storage object:', path, err);
+      }
+    }
+    async function uploadGalleryFile(file, projectId) {
+      const path = `gallery/${projectId}/${crypto.randomUUID()}-${file.name}`;
+      const { error } = await supabase.storage.from('site-media').upload(path, file);
+      if (error) throw error;
+      const { data } = supabase.storage.from('site-media').getPublicUrl(path);
+      return data.publicUrl;
+    }
+
+    function renderQgMedia() {
+      const list = document.getElementById('qg-media-list');
+      if (qgMedia.length === 0) { list.innerHTML = ''; return; }
+      list.innerHTML = qgMedia.map((m, i) => `
+        <div class="qg-media-row">
+          ${m.mediaType === 'video'
+            ? `<div class="qg-thumb qg-thumb-video">&#9654;</div>`
+            : `<img class="qg-thumb" src="${escapeHtml(m.previewUrl)}" />`}
+          <div class="qg-media-fields">
+            <input type="text" placeholder="Label (optional) - Before, After, Left Profile..." value="${escapeHtml(m.label)}" oninput="qgMedia[${i}].label = this.value" />
+            ${m.mediaType === 'video' ? `
+              <div class="qg-poster-row">
+                <span>Poster image (optional):</span>
+                ${m.posterPreviewUrl ? `<img class="qg-poster-preview" src="${escapeHtml(m.posterPreviewUrl)}" />` : ''}
+                <input type="file" accept="image/*" onchange="setQgPoster(${i}, this)" />
+              </div>` : ''}
+          </div>
+          <button type="button" class="btn-delete" onclick="removeQgMedia(${i})">Remove</button>
+        </div>
+      `).join('');
+    }
+    function setQgPoster(i, input) {
+      const file = input.files[0];
+      if (!file) return;
+      qgMedia[i].posterFile = file;
+      qgMedia[i].posterUrl = null;
+      qgMedia[i].posterPreviewUrl = URL.createObjectURL(file);
+      renderQgMedia();
+    }
+    function removeQgMedia(i) {
+      const [removed] = qgMedia.splice(i, 1);
+      // Only queue an existing (already-saved) photo for storage deletion -
+      // a newly-picked, never-uploaded file just disappears with the array
+      // splice, nothing to clean up server-side.
+      if (removed.photoId) qgRemoved.push(removed);
+      renderQgMedia();
+    }
+    document.getElementById('qg-files').addEventListener('change', (e) => {
+      for (const file of e.target.files) {
+        const isVideo = file.type.startsWith('video/');
+        qgMedia.push({
+          photoId: null, file, url: null, previewUrl: URL.createObjectURL(file),
+          label: '', mediaType: isVideo ? 'video' : 'image',
+          posterFile: null, posterUrl: null, posterPreviewUrl: null
+        });
+      }
+      e.target.value = '';
+      renderQgMedia();
+    });
+
+    function openGalleryForm(project) {
+      editingGalleryProjectId = project ? project.id : null;
+      qgRemoved = [];
+      document.getElementById('galleryFormTitle').textContent = project ? 'Edit Gallery Project' : 'Add Gallery Project';
+      document.getElementById('qg-title').value = project ? (project.title || '') : '';
+      document.getElementById('qg-type').value = project ? (project.type || '') : '';
+      document.getElementById('qg-caliber').value = project ? (project.caliber || '') : '';
+      document.getElementById('qg-is-showcase').checked = project ? !!project.is_showcase : false;
+      document.getElementById('qg-files').value = '';
+      qgMedia = project && project.gallery_project_photos
+        ? project.gallery_project_photos.slice().sort((a, b) => a.position - b.position).map(p => ({
+            photoId: p.id, file: null, url: p.photo_url, previewUrl: p.photo_url,
+            label: p.label || '', mediaType: p.media_type || 'image',
+            posterFile: null, posterUrl: p.poster_url || null, posterPreviewUrl: p.poster_url || null
+          }))
+        : [];
+      renderQgMedia();
+      document.getElementById('saveGalleryBtn').textContent = project ? 'Save Project' : 'Add Project';
+      document.getElementById('galleryFormOverlay').classList.add('open');
+    }
+    function closeGalleryForm() {
+      editingGalleryProjectId = null;
+      qgMedia = [];
+      qgRemoved = [];
+      document.getElementById('galleryFormOverlay').classList.remove('open');
+    }
+    document.getElementById('addGalleryBtn').addEventListener('click', () => openGalleryForm(null));
+    document.getElementById('cancelGalleryBtn').addEventListener('click', closeGalleryForm);
+
+    function editGalleryProject(id) {
+      const project = galleryAllRows.find(p => p.id === id);
+      if (project) openGalleryForm(project);
+    }
+
+    document.getElementById('saveGalleryBtn').addEventListener('click', async () => {
+      const title = document.getElementById('qg-title').value.trim();
+      if (!title) { showToast('A title is required.'); return; }
+      if (qgMedia.length === 0) { showToast('At least one photo or video is required.'); return; }
+
+      const saveBtn = document.getElementById('saveGalleryBtn');
+      saveBtn.disabled = true;
+
+      const projectPayload = {
+        title,
+        type: document.getElementById('qg-type').value.trim() || null,
+        caliber: document.getElementById('qg-caliber').value.trim() || null,
+        is_showcase: document.getElementById('qg-is-showcase').checked
+      };
+      const wasEditing = !!editingGalleryProjectId;
+
+      try {
+        let projectId = editingGalleryProjectId;
+        if (projectId) {
+          const { error } = await supabase.from('gallery_projects').update(projectPayload).eq('id', projectId);
+          if (error) throw error;
+        } else {
+          const { data, error } = await supabase.from('gallery_projects').insert(projectPayload).select('id').single();
+          if (error) throw error;
+          projectId = data.id;
+        }
+
+        // Upload only what's actually new - existing kept photos already
+        // have a url and skip straight through.
+        for (const m of qgMedia) {
+          if (m.file && !m.url) m.url = await uploadGalleryFile(m.file, projectId);
+          if (m.mediaType === 'video' && m.posterFile && !m.posterUrl) m.posterUrl = await uploadGalleryFile(m.posterFile, projectId);
+        }
+
+        // Storage isn't part of Postgres's on-delete-cascade, so anything
+        // the admin removed during this edit needs its object deleted here
+        // explicitly, before the DB rows below get replaced.
+        for (const removed of qgRemoved) {
+          await deleteGalleryStorageObject(removed.url);
+          if (removed.posterUrl) await deleteGalleryStorageObject(removed.posterUrl);
+        }
+
+        // Simplest correct way to keep `position` in sync with however
+        // qgMedia was left after adds/removes/reorders: replace this
+        // project's photo rows wholesale rather than diffing them one by
+        // one. Cheap at this table's size.
+        if (wasEditing) {
+          const { error: delErr } = await supabase.from('gallery_project_photos').delete().eq('project_id', projectId);
+          if (delErr) throw delErr;
+        }
+        const photoRows = qgMedia.map((m, i) => ({
+          project_id: projectId,
+          photo_url: m.url,
+          label: m.label || null,
+          position: i,
+          media_type: m.mediaType,
+          poster_url: m.mediaType === 'video' ? (m.posterUrl || null) : null
+        }));
+        const { error: insErr } = await supabase.from('gallery_project_photos').insert(photoRows);
+        if (insErr) throw insErr;
+
+        closeGalleryForm();
+        loadGalleryProjects();
+        showToast(wasEditing ? 'Project updated.' : 'Project added.');
+      } catch (err) {
+        console.error('saveGalleryProject failed:', err);
+        showToast('Error saving project: ' + (err.message || 'check your Supabase config.'));
+      } finally {
+        saveBtn.disabled = false;
+      }
+    });
+
+    async function toggleShowcase(id, value) {
+      const { error } = await supabase.from('gallery_projects').update({ is_showcase: value }).eq('id', id);
+      if (error) { showToast('Error: ' + error.message); return; }
+      showToast(value ? 'Added to showcase.' : 'Removed from showcase.');
+      loadGalleryProjects();
+    }
+
+    // Lower stakes than deleting a customer's build - a plain confirm() is
+    // fine here, unlike deleteBuild()'s typed-confirmation modal above.
+    async function deleteGalleryProject(id) {
+      const project = galleryAllRows.find(p => p.id === id);
+      if (!project) return;
+      if (!confirm(`Delete "${project.title}" and all its photos? This cannot be undone.`)) return;
+      const photos = project.gallery_project_photos || [];
+      for (const photo of photos) {
+        await deleteGalleryStorageObject(photo.photo_url);
+        if (photo.poster_url) await deleteGalleryStorageObject(photo.poster_url);
+      }
+      const { error } = await supabase.from('gallery_projects').delete().eq('id', id);
+      if (error) { showToast('Error: ' + error.message); return; }
+      showToast('Project deleted.');
+      loadGalleryProjects();
+    }
+
+    function renderGalleryTable(container, rows) {
+      if (rows.length === 0) {
+        container.innerHTML = '<div class="empty-state">No gallery projects yet. Click "+ Add Project" to get started.</div>';
+        return;
+      }
+      container.innerHTML = `
+        <table class="data-table">
+          <thead><tr><th></th><th>Title</th><th>Type / Caliber</th><th>Showcase</th><th>Photos</th><th></th></tr></thead>
+          <tbody>
+            ${rows.map(p => {
+              const photos = (p.gallery_project_photos || []).slice().sort((a, b) => a.position - b.position);
+              const cover = photos[0];
+              let thumb = '<span style="color:var(--muted);font-size:11px;">None</span>';
+              if (cover) {
+                thumb = cover.media_type === 'video'
+                  ? (cover.poster_url
+                      ? `<img src="${escapeHtml(cover.poster_url)}" style="width:44px;height:44px;object-fit:cover;" />`
+                      : `<div class="thumb-video-placeholder">&#9654;</div>`)
+                  : `<img src="${escapeHtml(cover.photo_url)}" style="width:44px;height:44px;object-fit:cover;" />`;
+              }
+              return `
+              <tr>
+                <td>${thumb}</td>
+                <td class="title">${escapeHtml(p.title)}</td>
+                <td style="font-size:12px;">${[p.type, p.caliber].filter(Boolean).map(escapeHtml).join(' · ') || '—'}</td>
+                <td><button class="showcase-star ${p.is_showcase ? 'active' : ''}" onclick="toggleShowcase('${p.id}', ${!p.is_showcase})" title="${p.is_showcase ? 'Showcased - click to remove' : 'Click to showcase'}">&#9733;</button></td>
+                <td style="font-size:12px;">${photos.length}</td>
+                <td><div class="row-actions">
+                  <button class="btn-edit" onclick="editGalleryProject('${p.id}')">Edit</button>
+                  <button class="btn-delete" onclick="deleteGalleryProject('${p.id}')">Delete</button>
+                </div></td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>`;
+    }
+
+    async function loadGalleryProjects() {
+      const container = document.getElementById('galleryTable');
+      try {
+        const { data, error } = await supabase
+          .from('gallery_projects')
+          .select('*, gallery_project_photos(*)')
+          .order('created_at', { ascending: false });
+        if (error) throw error;
+        galleryAllRows = data || [];
+      } catch (err) {
+        console.error('loadGalleryProjects failed:', err);
+        galleryAllRows = [];
+        container.innerHTML = '<div class="empty-state">Couldn\'t load gallery projects - check your Supabase config.</div>';
+        return;
+      }
+      renderGalleryTable(container, galleryAllRows);
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // MESSAGES
+    // ══════════════════════════════════════════════════════════
+
+    let messagesAllRows = [];
+    let openMessageIds = new Set();
+    // Matches contact.html's <select id="subject"> options exactly.
+    const SUBJECT_LABELS = {
+      build: 'Custom Build Inquiry',
+      gunsmithing: 'Gunsmithing / Repair',
+      training: 'Firearms Training',
+      transfer: 'FFL Transfer',
+      buysell: 'Buy / Sell / Trade',
+      ammo: 'Ammo & Gear',
+      other: 'Other'
+    };
+
+    async function loadMessages() {
+      const container = document.getElementById('messagesTable');
+      try {
+        const { data, error } = await supabase.from('contact_submissions').select('*').order('created_at', { ascending: false });
+        if (error) throw error;
+        messagesAllRows = data || [];
+      } catch (err) {
+        console.error('loadMessages failed:', err);
+        messagesAllRows = [];
+        container.innerHTML = '<div class="empty-state">Couldn\'t load messages - check your Supabase config.</div>';
+        updateMessagesBadge();
+        return;
+      }
+      renderMessagesTable();
+      updateMessagesBadge();
+    }
+    function updateMessagesBadge() {
+      const unread = messagesAllRows.filter(m => !m.is_read).length;
+      document.getElementById('messagesTabBtn').innerHTML = 'Messages' + (unread > 0 ? `<span class="count-badge">${unread}</span>` : '');
+    }
+    function renderMessagesTable() {
+      const container = document.getElementById('messagesTable');
+      if (messagesAllRows.length === 0) {
+        container.innerHTML = '<div class="empty-state">No messages yet.</div>';
+        return;
+      }
+      container.innerHTML = `
+        <table class="data-table">
+          <thead><tr><th>Date</th><th>Name</th><th>Subject</th><th>Contact</th><th>Status</th><th></th></tr></thead>
+          <tbody>
+            ${messagesAllRows.map(m => `
+              <tr class="${m.is_read ? '' : 'row-unread'}">
+                <td style="font-size:12px;">${formatDateTime(m.created_at)}</td>
+                <td class="title">${m.is_read ? '' : '<span class="unread-dot"></span>'}${escapeHtml(m.first_name)} ${escapeHtml(m.last_name)}</td>
+                <td style="font-size:12px;">${escapeHtml(SUBJECT_LABELS[m.subject] || m.subject)}</td>
+                <td style="font-size:12px;">${escapeHtml(m.email)}${m.phone ? '<br>' + escapeHtml(m.phone) : ''}</td>
+                <td>${m.is_read ? '<span class="read-pill">Read</span>' : '<span class="unread-pill">Unread</span>'}</td>
+                <td><div class="row-actions">
+                  <button class="btn-edit" onclick="toggleMessageBody('${m.id}')">View</button>
+                  <button class="btn-edit" onclick="toggleMessageRead('${m.id}', ${!m.is_read})">${m.is_read ? 'Mark Unread' : 'Mark Read'}</button>
+                  <button class="btn-delete" onclick="deleteMessage('${m.id}')">Delete</button>
+                </div></td>
+              </tr>
+              <tr class="detail-row" id="msg-${m.id}" style="display:none;">
+                <td colspan="6">${escapeHtml(m.message)}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>`;
+      openMessageIds.forEach(id => {
+        const row = document.getElementById('msg-' + id);
+        if (row) row.style.display = '';
+      });
+    }
+    async function toggleMessageRead(id, isRead) {
+      const { error } = await supabase.from('contact_submissions').update({ is_read: isRead }).eq('id', id);
+      if (error) { showToast('Error: ' + error.message); return; }
+      const row = messagesAllRows.find(m => m.id === id);
+      if (row) row.is_read = isRead;
+      updateMessagesBadge();
+      renderMessagesTable();
+    }
+    // Auto-marks read the moment the body is expanded, matching the
+    // sister GVG dashboard's behavior.
+    function toggleMessageBody(id) {
+      const opening = !openMessageIds.has(id);
+      if (opening) openMessageIds.add(id); else openMessageIds.delete(id);
+      document.getElementById('msg-' + id).style.display = opening ? '' : 'none';
+      const msg = messagesAllRows.find(m => m.id === id);
+      if (opening && msg && !msg.is_read) toggleMessageRead(id, true);
+    }
+    async function deleteMessage(id) {
+      if (!confirm('Delete this message? This cannot be undone.')) return;
+      const { error } = await supabase.from('contact_submissions').delete().eq('id', id);
+      if (error) { showToast('Error: ' + error.message); return; }
+      messagesAllRows = messagesAllRows.filter(m => m.id !== id);
+      openMessageIds.delete(id);
+      renderMessagesTable();
+      updateMessagesBadge();
+      showToast('Message deleted.');
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // INTAKE
+    // ══════════════════════════════════════════════════════════
+
+    let intakeAllRows = [];
+    let openIntakeIds = new Set();
+
+    async function loadIntake() {
+      const container = document.getElementById('intakeTable');
+      try {
+        const { data, error } = await supabase.from('intake_submissions').select('*').order('created_at', { ascending: false });
+        if (error) throw error;
+        intakeAllRows = data || [];
+      } catch (err) {
+        console.error('loadIntake failed:', err);
+        intakeAllRows = [];
+        container.innerHTML = '<div class="empty-state">Couldn\'t load intake submissions - check your Supabase config.</div>';
+        updateIntakeBadge();
+        return;
+      }
+      renderIntakeTable();
+      updateIntakeBadge();
+    }
+    function updateIntakeBadge() {
+      const unread = intakeAllRows.filter(i => !i.is_read).length;
+      document.getElementById('intakeTabBtn').innerHTML = 'Intake' + (unread > 0 ? `<span class="count-badge">${unread}</span>` : '');
+    }
+    function renderIntakeTable() {
+      const container = document.getElementById('intakeTable');
+      if (intakeAllRows.length === 0) {
+        container.innerHTML = '<div class="empty-state">No intake submissions yet.</div>';
+        return;
+      }
+      container.innerHTML = `
+        <table class="data-table">
+          <thead><tr><th>Date</th><th>Code</th><th>Name</th><th>Service</th><th>Type / Caliber</th><th>NFA</th><th>Contact</th><th>Status</th><th></th></tr></thead>
+          <tbody>
+            ${intakeAllRows.map(i => `
+              <tr class="${i.is_read ? '' : 'row-unread'}">
+                <td style="font-size:12px;">${formatDateTime(i.created_at)}</td>
+                <td style="font-family:'Courier New',monospace;font-size:12px;color:var(--red-light);letter-spacing:1px;">${escapeHtml(i.intake_code) || '—'}</td>
+                <td class="title">${i.is_read ? '' : '<span class="unread-dot"></span>'}${escapeHtml(i.name)}</td>
+                <td style="font-size:12px;">${escapeHtml(i.service)}</td>
+                <td style="font-size:12px;">${escapeHtml(i.firearm_type || '—')}${i.caliber ? ' · ' + escapeHtml(i.caliber) : ''}</td>
+                <td>${i.is_nfa ? '<span class="nfa-pill">NFA</span>' : ''}</td>
+                <td style="font-size:12px;">${i.email ? escapeHtml(i.email) : ''}${i.phone ? (i.email ? '<br>' : '') + escapeHtml(i.phone) : ''}</td>
+                <td>${i.is_read ? '<span class="read-pill">Read</span>' : '<span class="unread-pill">Unread</span>'}</td>
+                <td><div class="row-actions">
+                  <button class="btn-edit" onclick="toggleIntakeBody('${i.id}')">View</button>
+                  <button class="btn-edit" onclick="createBuildFromIntake('${i.id}')">Create Build</button>
+                  <button class="btn-edit" onclick="toggleIntakeRead('${i.id}', ${!i.is_read})">${i.is_read ? 'Mark Unread' : 'Mark Read'}</button>
+                  <button class="btn-delete" onclick="deleteIntake('${i.id}')">Delete</button>
+                </div></td>
+              </tr>
+              <tr class="detail-row" id="intake-${i.id}" style="display:none;">
+                <td colspan="9">${i.notes ? escapeHtml(i.notes) : '(No notes provided.)'}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>`;
+      openIntakeIds.forEach(id => {
+        const row = document.getElementById('intake-' + id);
+        if (row) row.style.display = '';
+      });
+    }
+    async function toggleIntakeRead(id, isRead) {
+      const { error } = await supabase.from('intake_submissions').update({ is_read: isRead }).eq('id', id);
+      if (error) { showToast('Error: ' + error.message); return; }
+      const row = intakeAllRows.find(i => i.id === id);
+      if (row) row.is_read = isRead;
+      updateIntakeBadge();
+      renderIntakeTable();
+    }
+    function toggleIntakeBody(id) {
+      const opening = !openIntakeIds.has(id);
+      if (opening) openIntakeIds.add(id); else openIntakeIds.delete(id);
+      document.getElementById('intake-' + id).style.display = opening ? '' : 'none';
+      const row = intakeAllRows.find(i => i.id === id);
+      if (opening && row && !row.is_read) toggleIntakeRead(id, true);
+    }
+    async function deleteIntake(id) {
+      if (!confirm('Delete this intake submission? This cannot be undone.')) return;
+      const { error } = await supabase.from('intake_submissions').delete().eq('id', id);
+      if (error) { showToast('Error: ' + error.message); return; }
+      intakeAllRows = intakeAllRows.filter(i => i.id !== id);
+      openIntakeIds.delete(id);
+      renderIntakeTable();
+      updateIntakeBadge();
+      showToast('Intake submission deleted.');
+    }
+
+    // Pre-fills the Add Build form with everything structured the intake
+    // submission actually gives us. Deliberately leaves title and public
+    // notes blank - those need an actual judgment call about what the
+    // customer sent, not a guess assembled from form fields - and seeds
+    // internal notes with just the reference code so it's easy to
+    // cross-check against whatever's written on the box that shows up.
+    // builds.type is a free-text column (not a fixed picklist), so
+    // intake.firearm_type passes straight through with no matching logic
+    // needed - there's no picklist for it to fail to match against.
+    // No link/foreign-key is created between the two tables; this is a
+    // one-way convenience prefill only.
+    function createBuildFromIntake(id) {
+      const intake = intakeAllRows.find(i => i.id === id);
+      if (!intake) return;
+
+      activateTab('builds');
+      openBuildForm({
+        id: '',
+        title: '',
+        type: intake.firearm_type || '',
+        caliber: intake.caliber || '',
+        status: 'intake',
+        is_nfa: intake.is_nfa,
+        customer_name: intake.name || '',
+        customer_email: intake.email || '',
+        customer_phone: intake.phone || '',
+        notes: intake.intake_code ? `Ref: ${intake.intake_code}` : ''
+      });
+
+      if (intake.notes) showToast('Pre-filled from intake - check the submission notes for what they actually sent before saving.');
+    }
+
+    // ── INIT ──
+    // Each tab's own load*() function catches its own errors and renders
+    // its own fallback state (see above) - one tab failing to reach
+    // Supabase can never block another tab's data from loading or the tab
+    // buttons themselves from working.
+    loadBuilds();
+    loadGalleryProjects();
+    loadMessages();
+    loadIntake();
+  </script>
+</body>
+</html>

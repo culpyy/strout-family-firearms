@@ -12,6 +12,8 @@
   <meta property="og:description" content="Get in touch with Strout Family Firearms. FFL transfers $20, custom builds, gunsmithing, and USCCA training in Limington, ME. Call (207) 332-6999." />
   <meta property="og:type" content="website" />
   <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -46,6 +48,8 @@
       <li><a href="index.html">Home</a></li>
       <li><a href="gallery.html">Gallery</a></li>
       <li><a href="inshop.html">In Shop</a></li>
+      <li><a href="intake.html">Ship to Us</a></li>
+      <li><a href="track.html">Track</a></li>
       <li><a href="updates.html">Updates</a></li>
       <li><a href="contact.html" class="active">Contact</a></li>
     </ul>
@@ -150,6 +154,9 @@
           <button type="submit" class="btn-primary" style="margin-top: 8px; width: 100%; justify-content: center;">
             Send Message &#8594;
           </button>
+          <p id="formError" class="form-note" style="display: none; color: var(--red-light); margin-top: 12px;">
+            Something went wrong sending this - call us instead at <a href="tel:2073326999" style="color: var(--red-light);">(207) 332-6999</a>.
+          </p>
         </form>
       </div>
 
@@ -201,6 +208,8 @@
           <li><a href="index.html">Home</a></li>
           <li><a href="gallery.html">Gallery</a></li>
           <li><a href="inshop.html">In Shop</a></li>
+          <li><a href="intake.html">Ship to Us</a></li>
+          <li><a href="track.html">Track</a></li>
           <li><a href="updates.html">Updates</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>

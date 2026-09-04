@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <title>Ship to Us | Strout Family Firearms</title>
+  <meta name="description" content="Mailing in a build, kit, or firearm for work at Strout Family Firearms in Limington, ME? Get a code for the box in under a minute." />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Ship to Us | Strout Family Firearms" />
+  <meta property="og:description" content="Get a shipping code before you mail in a build or firearm for work at Strout Family Firearms, and know exactly how to box it up." />
+  <meta property="og:type" content="website" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ── LAYOUT ── */
+    .intake-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 48px;
+      max-width: 1100px;
+      align-items: start;
+    }
+    .sidebar-col {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: sticky;
+      top: 110px;
+    }
+    .sidebar-col h4 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--red-light);
+      margin-bottom: 6px;
+    }
+    @media (max-width: 900px) {
+      .intake-grid { grid-template-columns: 1fr; gap: 32px; }
+      .sidebar-col { position: static; }
+    }
+
+    /* ── NOTICES ── */
+    .intake-note {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+      background: var(--surface);
+      border-left: 3px solid var(--red);
+      padding: 16px 20px;
+    }
+
+    /* ── WIZARD ── */
+    .wizard-progress {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+    .wizard-progress-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--red-light);
+      white-space: nowrap;
+    }
+    .wizard-progress-bar {
+      flex: 1;
+      height: 3px;
+      background: var(--border);
+      position: relative;
+    }
+    .wizard-progress-fill {
+      height: 100%;
+      background: var(--red-light);
+      transition: width 0.3s ease;
+    }
+    .wizard-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 32px;
+    }
+    .wizard-step { display: none; }
+    .wizard-step.active { display: block; }
+    .wizard-step h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      letter-spacing: 1.5px;
+      color: var(--text);
+      margin: 0 0 4px;
+    }
+    .wizard-step-desc {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 22px;
+      line-height: 1.6;
+    }
+    .wizard-nav {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .wizard-nav .btn-primary,
+    .wizard-nav .btn-secondary { flex: 1; justify-content: center; }
+
+    @media (max-width: 580px) {
+      .wizard-card { padding: 24px 20px; }
+      /* Two buttons squeezed side by side wraps mid-phrase on a real phone
+         once the label is long enough - stack instead. */
+      .wizard-nav { flex-direction: column; }
+    }
+
+    /* ── HONEYPOT ──
+       Off-screen positioning, not display:none - some bots specifically
+       skip filling display:none fields, so true off-screen placement is the
+       more effective trap. A real person never sees or fills this. */
+    .intake-hp {
+      position: absolute;
+      left: -9999px;
+      top: -9999px;
+    }
+
+    /* ── RESULT CODE + READ-BACK ── */
+    .ref-code-box {
+      background: var(--bg);
+      border: 2px solid var(--red);
+      padding: 18px 20px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .ref-code-label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .ref-code-value {
+      font-family: 'Courier New', monospace;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--red-light);
+      word-break: break-all;
+    }
+    .result-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .result-step {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .result-step-num {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--red-light);
+      color: #fff;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .result-address {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .result-address strong {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--red-light);
+      margin-bottom: 6px;
+    }
+    .slip-details { margin-top: 4px; }
+    .slip-row { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid var(--border); font-size: 13px; }
+    .slip-row span:first-child { color: var(--muted); }
+    .slip-row span:last-child { color: var(--text); text-align: right; }
+
+    @media print {
+      /* display:none, not visibility:hidden - a hidden element still holds
+         its layout height under visibility:hidden, and nav/page-header/
+         sidebar/footer add up to more than one printed page, which pushes
+         the result card past a page boundary and splits it in two. */
+      nav, .page-header, .sidebar-col, .wizard-progress, footer { display: none !important; }
+      body { background: #fff !important; }
+      section { padding: 0 !important; margin: 0 !important; }
+      .intake-grid { display: block !important; max-width: none !important; }
+
+      @page { margin: 0.5in; }
+
+      .wizard-card {
+        border: 1px solid #000;
+        width: 100%;
+        max-width: none;
+        padding: 24px;
+        break-inside: avoid;
+      }
+      /* Every text color on the site is a light-on-dark theme value, fine on
+         the dark background but printed on plain white paper it's nearly
+         invisible, which defeats the point of a slip meant to go in the box.
+         Force real black on white. */
+      .wizard-card, .wizard-card * { color: #000 !important; }
+      .slip-row { padding: 6px 0; }
+      .wizard-nav, #printSlipBtn, #startOverBtn { display: none !important; }
+      .ref-code-box { border: 2px solid #000 !important; background: none !important; }
+      .ref-code-value { color: #000 !important; }
+      .result-step-num { background: #000 !important; color: #fff !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">
+      <span class="wordmark">Strout Family Firearms</span>
+      <span class="sub">Limington, Maine<span class="sub-ffl"> · FFL 07 Manufacturer</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="inshop.html">In Shop</a></li>
+      <li><a href="intake.html" class="active">Ship to Us</a></li>
+      <li><a href="track.html">Track</a></li>
+      <li><a href="updates.html">Updates</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Get In Touch</a>
+    <div class="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="section-label">Before You Ship</div>
+    <h1>Ship to Us</h1>
+    <p>Two short steps and you'll have a code for the box. Write it on the outside before you ship, and we'll know exactly what showed up and who it's from.</p>
+  </div>
+
+  <!-- WIZARD -->
+  <section>
+    <div class="intake-grid">
+      <div class="wizard-col">
+        <div class="wizard-wrap">
+          <div class="wizard-progress" id="wizardProgress">
+            <span class="wizard-progress-label" id="wizardProgressLabel">Step 1 of 2</span>
+            <div class="wizard-progress-bar"><div class="wizard-progress-fill" id="wizardProgressFill" style="width:50%;"></div></div>
+          </div>
+
+          <div class="wizard-card">
+            <form id="intakeForm" novalidate>
+              <p class="intake-hp">
+                <label>Leave this field blank: <input type="text" name="_gotcha" id="i-gotcha" tabindex="-1" autocomplete="off" /></label>
+              </p>
+
+              <!-- STEP 1: YOUR INFO -->
+              <div class="wizard-step active" id="wizardStep1">
+                <h2>Your Info</h2>
+                <p class="wizard-step-desc">So we can match your shipment to you and get in touch about it.</p>
+                <div class="contact-form">
+                  <div class="form-group">
+                    <label for="i-name">Full Name</label>
+                    <input type="text" id="i-name" placeholder="John Smith" required />
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="i-phone">Phone</label>
+                      <input type="tel" id="i-phone" placeholder="(207) 555-0100" />
+                    </div>
+                    <div class="form-group">
+                      <label for="i-email">Email</label>
+                      <input type="email" id="i-email" placeholder="you@example.com" />
+                    </div>
+                  </div>
+                  <p class="form-note" style="margin-top:-8px;">Give us at least one: phone or email.</p>
+                </div>
+                <p class="form-note" id="step1Error" style="display:none;color:var(--red-glow);"></p>
+                <div class="wizard-nav">
+                  <button type="button" id="toStep2Btn" class="btn-primary">Next: What You're Sending &#8594;</button>
+                </div>
+              </div>
+
+              <!-- STEP 2: WHAT YOU'RE SENDING -->
+              <div class="wizard-step" id="wizardStep2">
+                <h2>What You're Sending</h2>
+                <p class="wizard-step-desc">Takes a few seconds. This is what lets us know what to expect before it arrives.</p>
+                <div class="contact-form">
+                  <div class="form-group">
+                    <label for="i-service">What's This For?</label>
+                    <!--
+                      Reusing contact.html's full subject taxonomy would include
+                      Training and Ammo & Gear, neither of which involves
+                      shipping something to us (you don't mail yourself in for
+                      a class, and gear/ammo isn't sent in for shop work), so
+                      this wizard uses the tighter subset of contact.html's list
+                      that actually applies to a physical item arriving in a box.
+                    -->
+                    <select id="i-service" required>
+                      <option value="" disabled selected>Select a service</option>
+                      <option value="build">Custom Build</option>
+                      <option value="gunsmithing">Gunsmithing / Repair</option>
+                      <option value="transfer">FFL Transfer</option>
+                      <option value="buysell">Buy / Sell / Trade</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="i-type">Firearm Type</label>
+                      <select id="i-type">
+                        <option>Rifle</option>
+                        <option>Pistol</option>
+                        <option>Shotgun</option>
+                        <option>Short-Barreled Rifle</option>
+                        <option>Short-Barreled Shotgun</option>
+                        <option>Suppressor</option>
+                        <option>Machine Gun/NFA</option>
+                        <option>Other</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="i-caliber">Caliber (optional)</label>
+                      <input type="text" id="i-caliber" placeholder="7.62x51 NATO" />
+                    </div>
+                  </div>
+                  <div class="form-group" style="flex-direction: row; align-items: center; gap: 10px;">
+                    <input type="checkbox" id="i-nfa" style="width:16px;height:16px;accent-color:var(--red-light);cursor:pointer;" />
+                    <label for="i-nfa" style="text-transform:none;letter-spacing:normal;font-size:13px;cursor:pointer;">This is an NFA item (suppressor, SBR, SBS, machine gun)</label>
+                  </div>
+                  <p class="form-note" id="i-nfa-locked-note" style="display:none;margin-top:-8px;">Locked on: the firearm type you selected is an NFA item.</p>
+                  <div class="form-group">
+                    <label for="i-notes">Notes</label>
+                    <textarea id="i-notes" placeholder="What's in the box, what you want done..."></textarea>
+                  </div>
+                </div>
+                <p class="form-note" id="intakeError" style="display:none;color:var(--red-glow);"></p>
+                <div class="wizard-nav">
+                  <button type="button" id="backToStep1Btn" class="btn-secondary">&#8592; Back</button>
+                  <button type="button" id="intakeSubmitBtn" class="btn-primary">Get My Shipping Code &#8594;</button>
+                </div>
+              </div>
+            </form>
+
+            <!-- STEP 3: RESULT (outside the form - nothing left to submit here) -->
+            <div class="wizard-step" id="wizardStep3">
+              <h2>You're Set</h2>
+              <p class="wizard-step-desc">Here's your code and what to do next.</p>
+
+              <div class="ref-code-box">
+                <div class="ref-code-label">Your Shipping Code</div>
+                <div class="ref-code-value" id="slipCode">&mdash;</div>
+              </div>
+
+              <div class="result-steps">
+                <div class="result-step"><span class="result-step-num">1</span><span>Write this code on the <strong>outside</strong> of the box before you ship it.</span></div>
+                <div class="result-step"><span class="result-step-num">2</span><span>Print this page (or write the code down) and put a copy <strong>inside</strong> the box too.</span></div>
+                <div class="result-step"><span class="result-step-num">3</span><span>Ship it to the address below.</span></div>
+              </div>
+
+              <div class="result-address">
+                <strong>Ship To</strong>
+                Strout Family Firearms<br>
+                146 Tucker Rd<br>
+                Limington, ME 04049<br>
+                (207) 332-6999
+              </div>
+
+              <div class="slip-details">
+                <div class="slip-row" style="border-top:none;padding-top:0;"><span>Name</span><span id="slipName">&mdash;</span></div>
+                <div class="slip-row"><span>Phone</span><span id="slipPhone">&mdash;</span></div>
+                <div class="slip-row"><span>Email</span><span id="slipEmail">&mdash;</span></div>
+                <div class="slip-row"><span>Service</span><span id="slipService">&mdash;</span></div>
+                <div class="slip-row"><span>Firearm Type</span><span id="slipType">&mdash;</span></div>
+                <div class="slip-row"><span>Caliber</span><span id="slipCaliber">&mdash;</span></div>
+                <div class="slip-row"><span>NFA Item</span><span id="slipNfa">&mdash;</span></div>
+                <div class="slip-row" id="slipNotesRow" style="display:none;flex-direction:column;align-items:flex-start;gap:6px;">
+                  <span>Notes</span><span id="slipNotes" style="text-align:left;"></span>
+                </div>
+              </div>
+
+              <div class="wizard-nav">
+                <button type="button" id="printSlipBtn" class="btn-primary">Print This Page</button>
+                <button type="button" id="startOverBtn" class="btn-secondary">Ship Something Else</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-col">
+        <div class="info-block">
+          <h4>Ship To</h4>
+          <p>Strout Family Firearms<br>146 Tucker Rd<br>Limington, ME 04049</p>
+        </div>
+        <div class="info-block">
+          <h4>Phone</h4>
+          <p><a href="tel:2073326999">(207) 332-6999</a></p>
+        </div>
+        <div class="intake-note">
+          <strong style="color:var(--text);">Shipping an NFA item (suppressor, SBR, SBS, machine gun), or not sure what applies?</strong> Call us first at <a href="tel:2073326999" style="color: var(--red-light);">(207) 332-6999</a> before you send anything.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="wordmark">Strout Family Firearms</div>
+        <div class="sub">Limington, Maine</div>
+        <p>Southern Maine's local FFL 07 Dealer &amp; Manufacturer. Building, refurbishing, and training since day one.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Pages</h5>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="inshop.html">In Shop</a></li>
+          <li><a href="intake.html">Ship to Us</a></li>
+          <li><a href="track.html">Track</a></li>
+          <li><a href="updates.html">Updates</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="tel:2073326999">(207) 332-6999</a></li>
+          <li><a href="https://maps.google.com/?q=146+Tucker+Rd+Limington+ME+04049" target="_blank">146 Tucker Rd<br>Limington, ME 04049</a></li>
+          <li><a href="https://www.instagram.com/strout_family_firearms/" target="_blank">Instagram</a></li>
+          <li><a href="https://www.facebook.com/p/Strout-Family-Firearms-100057304245616/" target="_blank">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024–2026 Strout Family Firearms. All rights reserved.</p>
+      <span class="ffl-badge">FFL 07 · SOT · USCCA Certified</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    const SERVICE_LABELS = {
+      build:        'Custom Build',
+      gunsmithing:  'Gunsmithing / Repair',
+      transfer:     'FFL Transfer',
+      buysell:      'Buy / Sell / Trade',
+      other:        'Other'
+    };
+
+    const intakeForm = document.getElementById('intakeForm');
+    const step1ErrorEl = document.getElementById('step1Error');
+    const step2ErrorEl = document.getElementById('intakeError');
+
+    // Native form submission is never used here - this is a JS-driven
+    // multi-step flow, and the real insert fires explicitly off the Step 2
+    // "Next" button (below), not off a submit event. Still guard against an
+    // Enter-key submit inside a text field triggering a native post/reload.
+    intakeForm.addEventListener('submit', e => e.preventDefault());
+
+    // ── WIZARD STEP NAVIGATION ──
+    const steps = [
+      document.getElementById('wizardStep1'),
+      document.getElementById('wizardStep2'),
+      document.getElementById('wizardStep3')
+    ];
+    const progressLabel = document.getElementById('wizardProgressLabel');
+    const progressFill = document.getElementById('wizardProgressFill');
+    const progressWrap = document.getElementById('wizardProgress');
+
+    function goToStep(n) {
+      steps.forEach((s, i) => s.classList.toggle('active', i === n - 1));
+      if (n <= 2) {
+        progressWrap.style.display = '';
+        progressLabel.textContent = `Step ${n} of 2`;
+        progressFill.style.width = n === 1 ? '50%' : '100%';
+      } else {
+        // Nothing left to progress through on the result step.
+        progressWrap.style.display = 'none';
+      }
+      window.scrollTo({ top: document.querySelector('.wizard-wrap').getBoundingClientRect().top + window.scrollY - 90, behavior: 'smooth' });
+    }
+
+    document.getElementById('toStep2Btn').addEventListener('click', () => {
+      const name = document.getElementById('i-name').value.trim();
+      const email = document.getElementById('i-email').value.trim();
+      const phone = document.getElementById('i-phone').value.trim();
+      if (!name || (!email && !phone)) {
+        step1ErrorEl.textContent = 'Please add your name, and at least a phone number or email.';
+        step1ErrorEl.style.display = 'block';
+        return;
+      }
+      step1ErrorEl.style.display = 'none';
+      goToStep(2);
+    });
+
+    document.getElementById('backToStep1Btn').addEventListener('click', () => {
+      step2ErrorEl.style.display = 'none';
+      goToStep(1);
+    });
+
+    // A customer picking "Short-Barreled Rifle" etc. but leaving the NFA
+    // checkbox unchecked would let the intake record understate a regulated
+    // item - lock it on (and disable unchecking) whenever the firearm type
+    // itself is NFA, so there's no way to submit that combination.
+    // .checked still reads correctly on a disabled input, and the submit
+    // handler reads it directly by id, so disabling it doesn't drop the
+    // value. Switching back to a non-NFA type re-enables the box but leaves
+    // it checked if the user had checked it themselves beforehand - least
+    // surprising, since unchecking it for them would silently discard
+    // something they deliberately set.
+    const NFA_TYPES = ['Short-Barreled Rifle', 'Short-Barreled Shotgun', 'Suppressor', 'Machine Gun/NFA'];
+    const typeSelect = document.getElementById('i-type');
+    const nfaCheckbox = document.getElementById('i-nfa');
+    const nfaLockedNote = document.getElementById('i-nfa-locked-note');
+
+    function syncNfaFromType() {
+      const isNfaType = NFA_TYPES.includes(typeSelect.value);
+      if (isNfaType) {
+        nfaCheckbox.checked = true;
+        nfaCheckbox.disabled = true;
+        nfaLockedNote.style.display = 'block';
+      } else {
+        nfaCheckbox.disabled = false;
+        nfaLockedNote.style.display = 'none';
+      }
+    }
+    typeSelect.addEventListener('change', syncNfaFromType);
+    syncNfaFromType();
+
+    // ── STEP 2 -> STEP 3: THE REAL SUPABASE INSERT ──
+    // Fires off the Step 2 "Next" button, not a form submit - Step 3 needs
+    // the real intake_code the database trigger generates, so the insert
+    // has to complete (or fail) before advancing.
+    document.getElementById('intakeSubmitBtn').addEventListener('click', async () => {
+      step2ErrorEl.style.display = 'none';
+
+      // Honeypot: a real visitor never sees or fills this field. If it has
+      // a value, silently do nothing - no error, no advance, no signal back
+      // to whatever filled it that it was caught.
+      const gotcha = document.getElementById('i-gotcha').value;
+      if (gotcha) return;
+
+      const name    = document.getElementById('i-name').value.trim();
+      const email   = document.getElementById('i-email').value.trim();
+      const phone   = document.getElementById('i-phone').value.trim();
+      const service = document.getElementById('i-service').value;
+      const type    = document.getElementById('i-type').value;
+      const caliber = document.getElementById('i-caliber').value.trim();
+      const isNfa   = document.getElementById('i-nfa').checked;
+      const notes   = document.getElementById('i-notes').value.trim();
+
+      if (!service) {
+        step2ErrorEl.textContent = 'Please pick what this is for.';
+        step2ErrorEl.style.display = 'block';
+        return;
+      }
+
+      const submitBtn = document.getElementById('intakeSubmitBtn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting…';
+
+      // Column names match sql/004_intake_submissions.sql exactly.
+      // intake_code is deliberately omitted - it's generated server-side by
+      // a `before insert` trigger, never set client-side.
+      const { data, error } = await supabase
+        .from('intake_submissions')
+        .insert({
+          name,
+          email: email || null,
+          phone: phone || null,
+          service,
+          firearm_type: type || null,
+          caliber: caliber || null,
+          is_nfa: isNfa,
+          notes: notes || null
+        })
+        .select()
+        .single();
+
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Get My Shipping Code →';
+
+      if (error || !data || !data.intake_code) {
+        // This WILL happen during this pass - js/supabase.js still points at
+        // placeholder config, so every insert fails. Never claim success or
+        // show a fake code when nothing was actually saved - show a clear
+        // error and point them at the phone instead.
+        console.error('Intake insert failed:', error);
+        step2ErrorEl.textContent = "Something went wrong submitting this. Please call us at (207) 332-6999 instead.";
+        step2ErrorEl.style.display = 'block';
+        return;
+      }
+
+      document.getElementById('slipCode').textContent = data.intake_code;
+      document.getElementById('slipName').textContent = name;
+      document.getElementById('slipPhone').textContent = phone || '—';
+      document.getElementById('slipEmail').textContent = email || '—';
+      document.getElementById('slipService').textContent = SERVICE_LABELS[service] || service;
+      document.getElementById('slipType').textContent = type || '—';
+      document.getElementById('slipCaliber').textContent = caliber || '—';
+      document.getElementById('slipNfa').textContent = isNfa ? 'Yes' : 'No';
+
+      const notesRow = document.getElementById('slipNotesRow');
+      if (notes) {
+        // Notes is free text the customer typed, rendered via innerHTML on
+        // this line, so it gets escaped even though nothing else on this
+        // page injects untrusted text this way.
+        document.getElementById('slipNotes').innerHTML = escapeHtml(notes);
+        notesRow.style.display = 'flex';
+      } else {
+        notesRow.style.display = 'none';
+      }
+
+      goToStep(3);
+    });
+
+    document.getElementById('printSlipBtn').addEventListener('click', () => window.print());
+
+    document.getElementById('startOverBtn').addEventListener('click', () => {
+      intakeForm.reset();
+      syncNfaFromType();
+      step1ErrorEl.style.display = 'none';
+      step2ErrorEl.style.display = 'none';
+      goToStep(1);
+    });
+  </script>
+</body>
+</html>

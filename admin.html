@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <title>Admin Login | Strout Family Firearms</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+    .login-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--red);
+      padding: 48px;
+      width: 100%;
+      max-width: 400px;
+    }
+    .login-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--red-light);
+      margin-bottom: 8px;
+    }
+    .login-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 34px;
+      letter-spacing: 2px;
+      color: var(--text);
+      margin-bottom: 32px;
+    }
+    .field { margin-bottom: 20px; }
+    .field label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .field input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 12px 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .field input:focus { border-color: var(--red-light); }
+    .btn-login {
+      width: 100%;
+      background: var(--red);
+      color: #fff;
+      border: 1px solid var(--red);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 16px;
+      letter-spacing: 2px;
+      padding: 14px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      margin-top: 8px;
+    }
+    .btn-login:hover { background: var(--red-light); border-color: var(--red-light); }
+    .btn-login:disabled { opacity: 0.6; cursor: not-allowed; }
+    .error-msg {
+      color: var(--warning);
+      font-size: 13px;
+      margin-top: 16px;
+      display: none;
+    }
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 24px;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--text); }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <div class="login-label">Strout Family Firearms</div>
+    <div class="login-title">Admin Login</div>
+    <form id="loginForm">
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" required autocomplete="email" />
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" required autocomplete="current-password" />
+      </div>
+      <button type="submit" class="btn-login" id="loginBtn">Sign In</button>
+      <div class="error-msg" id="errorMsg"></div>
+    </form>
+    <a href="index.html" class="back-link">&larr; Back to Site</a>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script>
+    // If a session already exists, skip the login form entirely. Wrapped
+    // in try/catch (not just relying on the promise chain) because this
+    // pass ships with placeholder Supabase config - getSession() failing
+    // here should never leave a blank page, it should just fall through
+    // to showing the login form like normal.
+    (async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) window.location.href = 'admin-dashboard.html';
+      } catch (err) {
+        console.error('getSession failed (expected with placeholder Supabase config):', err);
+      }
+    })();
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('loginBtn');
+      const errorMsg = document.getElementById('errorMsg');
+      btn.textContent = 'Signing In...';
+      btn.disabled = true;
+      errorMsg.style.display = 'none';
+
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: document.getElementById('email').value,
+          password: document.getElementById('password').value
+        });
+
+        // Generic message either way - doesn't confirm/deny whether the
+        // email itself exists, and covers a placeholder-config failure
+        // (this WILL fail during this code-readiness pass) the same as a
+        // genuinely wrong password instead of leaking which one it was.
+        if (error || !data?.session) {
+          errorMsg.textContent = 'Invalid email or password.';
+          errorMsg.style.display = 'block';
+          btn.textContent = 'Sign In';
+          btn.disabled = false;
+          return;
+        }
+
+        window.location.href = 'admin-dashboard.html';
+      } catch (err) {
+        console.error('Sign-in failed:', err);
+        errorMsg.textContent = 'Invalid email or password.';
+        errorMsg.style.display = 'block';
+        btn.textContent = 'Sign In';
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
